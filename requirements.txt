@@ -1,2 +1,2 @@
 Flask==0.10.1
--e git://github.com/kevinjalbert/notion-toolbox.git@13ba5c3bfe0955ef3102eaa99e1d2fc1bdee18bd#egg=notion
+git+https://github.com/kevinjalbert/notion-py.git
