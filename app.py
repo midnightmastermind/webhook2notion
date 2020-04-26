@@ -42,7 +42,7 @@ def createNotionTask(token, collectionURL, content, url):
             # drop blank lines
             text = '\n'.join(chunk for chunk in chunks if chunk)
             md = "".join(BeautifulSoup(text, features="html.parser").findAll(text=True))
-
+            print(md)
             newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
             upload(md, newPage)
 
