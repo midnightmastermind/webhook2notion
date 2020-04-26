@@ -16,15 +16,23 @@ def createNotionTask(token, collectionURL, content):
     row.title = content
 
 
-@app.route('/create_todo', methods=['GET'])
+@app.route('/create_task', methods=['GET'])
+def create_task():
+
+    task = request.args.get('task')
+    token_v2 = os.environ.get("TOKEN")
+    url = os.environ.get("TASKS_URL")
+    createNotionTask(token_v2, url, task)
+    return f'added {task} to Notion'
+
+@app.route('/create_note', methods=['GET'])
 def create_todo():
 
-    todo = request.args.get('todo')
+    note = request.args.get('note')
     token_v2 = os.environ.get("TOKEN")
-    url = os.environ.get("URL")
-    createNotionTask(token_v2, url, todo)
-    return f'added {todo} to Notion'
-
+    url = os.environ.get("NOTES_URL")
+    createNotionTask(token_v2, url, note)
+    return f'added {note} to Notion'
 
 if __name__ == '__main__':
     app.debug = True
