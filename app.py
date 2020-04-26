@@ -19,18 +19,18 @@ def createNotionTask(token, collectionURL, content):
 @app.route('/create_task', methods=['GET'])
 def create_task():
     task = request.args.get('task')
-    token_v2 = os.environ.get("TOKEN")
+    token_v2 = os.environ.get("NOTES_TOKEN")
     url = os.environ.get("TASKS_URL")
     createNotionTask(token_v2, url, task)
     return f'added {task} to Notion'
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
-    task = request.args.get('task')
-    token_v2 = os.environ.get("TOKEN")
+    note = request.args.get('note')
+    token_v2 = os.environ.get("NOTES_TOKEN")
     url = os.environ.get("NOTES_URL")
-    createNotionTask(token_v2, url, task)
-    return f'added {task} to Notion'
+    createNotionTask(token_v2, url, note)
+    return f'added {note} to Notion'
 
 if __name__ == '__main__':
     app.debug = True
