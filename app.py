@@ -5,7 +5,7 @@ from flask import Flask
 from flask import request
 from notion.block import BookmarkBlock, TextBlock, PageBlock
 import urllib3
-from md2notion import upload
+from md2notion.upload import upload
 import html2markdown
 
 app = Flask(__name__)
