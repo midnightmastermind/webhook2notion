@@ -21,12 +21,11 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
-            try:
                 page = urllib3.urlopen(url).read()
                 md = html2markdown.convert(url)
                 newPage = row.children.add_new(PageBlock, title=content)
                 upload(md, newPage) #Appends the converted contents of TestMarkdown.md to newPage
-            except:
+
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
                 page.title = content
