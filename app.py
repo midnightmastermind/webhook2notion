@@ -7,7 +7,6 @@ from notion.block import BookmarkBlock, TextBlock, PageBlock
 import urllib3
 from md2notion.upload import upload
 import html2markdown
-import Mdutils
 
 app = Flask(__name__)
 
