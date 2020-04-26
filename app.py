@@ -25,6 +25,8 @@ def createNotionTask(token, collectionURL, content, url):
             r = http.request('GET', url)
             markdown = html2markdown.convert(r.data)
             print(markdown)
+            with open('markdown.md', 'w') as file:
+                file.write(markdown)
             # with open('markdown.md','r', encoding="utf-8") as mdFile:
             #     newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
             #     upload(mdFile, newPage)
