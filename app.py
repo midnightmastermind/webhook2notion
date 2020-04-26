@@ -25,7 +25,7 @@ def createNotionTask(token, collectionURL, content, url):
         if (url):
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
-                doc = pandoc.Document()
+                doc = pypandoc.Document()
                 doc.html = r.data
 
                 mdFile = open('TestMarkdown.md','w').write(doc.markdown)
