@@ -26,11 +26,11 @@ def create_task():
     return f'added {task} to Notion'
 
 @app.route('/create_note', methods=['GET'])
-def create_todo():
+def create_note():
 
     note = request.args.get('note')
     token_v2 = os.environ.get("TOKEN")
-    url = os.environ.get("NOTES_URL")
+    url = os.environ.get("ARTICLES_URL")
     createNotionTask(token_v2, url, note)
     return f'added {note} to Notion'
 
