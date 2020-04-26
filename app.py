@@ -4,9 +4,9 @@ from notion.client import NotionClient
 from flask import Flask
 from flask import request
 from notion.block import BookmarkBlock, TextBlock
-from urllib3 import urllib3
+import urllib3
 from md2notion import upload
-from html2markdown import html2markdown
+import html2markdown
 
 app = Flask(__name__)
 
