@@ -23,7 +23,9 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
-            html = markdown.markdown(url)
+            http = urllib3.PoolManager()
+            r = http.request('GET', )
+            html = markdown.markdown(r.data)
             soup = BeautifulSoup(html)
 
             # kill all script and style elements
