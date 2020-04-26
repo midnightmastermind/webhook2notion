@@ -32,6 +32,7 @@ def create_note():
 
 @app.route('/create_task', methods=['GET'])
 def create_task():
+    url = request.args.get('url')
     task = request.args.get('task')
     token_v2 = os.environ.get("TASKS_TOKEN")
     tasks_url = os.environ.get("TASKS_URL")
