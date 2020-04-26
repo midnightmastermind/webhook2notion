@@ -7,7 +7,7 @@ from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
 from bs4 import BeautifulSoup
 import urllib3
-import MdUtils
+from mdutils.mdutils import MdUtils
 
 app = Flask(__name__)
 
@@ -27,7 +27,7 @@ def createNotionTask(token, collectionURL, content, url):
             mdFile.create_md_file()
 
             mdFile.write(md)
-            
+
             newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
             upload(mdFile, newPage)
 
