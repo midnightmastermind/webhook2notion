@@ -30,7 +30,7 @@ def createNotionTask(token, collectionURL, content, url):
             mdFile.close()
 
             #open and read the file after the appending:
-            mdFile = open("markdown.md", "r"))
+            mdFile = open("markdown.md", "r")
 
             newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
             upload(mdFile, newPage)
