@@ -10,18 +10,19 @@ app = Flask(__name__)
 
 def createNotionTask(token, collectionURL, content, url):
     # notion
-    client = NotionClient(token)
-    cv = client.get_collection_view(collectionURL)
-    print(cv.collection.parent.views)
-    row = cv.collection.add_row()
-    row.title = content
-    row.url = url
-    if (url):
-        page = row.children.add_new(BookmarkBlock)
-        page.link = url
-        page.title = content
-    else:
-        page = row.children.add_new(BasicBlock,title=content)
+    if (content):
+        client = NotionClient(token)
+        cv = client.get_collection_view(collectionURL)
+        print(cv.collection.parent.views)
+        row = cv.collection.add_row()
+        row.title = content
+        row.url = url
+        if (url):
+            page = row.children.add_new(BookmarkBlock)
+            page.link = url
+            page.title = content
+        else:
+            page = row.children.add_new(BasicBlock,title=content)
 
 
 @app.route('/create_note', methods=['GET'])
