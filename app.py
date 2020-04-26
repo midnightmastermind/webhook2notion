@@ -7,6 +7,7 @@ from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
 from bs4 import BeautifulSoup
 import urllib3
+import MdUtils
 
 app = Flask(__name__)
 
@@ -22,9 +23,13 @@ def createNotionTask(token, collectionURL, content, url):
         if (url):
             html = markdown.markdown(url)
             md = "".join(BeautifulSoup(html, features="html.parser").findAll(text=True))
-            # with open(md, "r", encoding="utf-8") as mdFile:
-            #     newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
-                # upload(mdFile, newPage)
+            mdFile = MdUtils(file_name='Example_Markdown',title='Markdown File Example')
+            mdFile.create_md_file()
+
+            mdFile.write(md)
+            
+            newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
+            upload(mdFile, newPage)
 
             page = row.children.add_new(BookmarkBlock)
             page.link = url
