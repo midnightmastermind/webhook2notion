@@ -26,9 +26,9 @@ def createNotionTask(token, collectionURL, content, url):
             r = http.request('GET', url)
             # markdown = pypandoc.convert_text(r.data, 'md', format='html')
 
-            # with open('TestMarkdown.md','w+', encoding="utf-8").write(markdown) as mdFile:
-            #     newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
-            #     upload(mdFile, newPage)
+            with open('TestMarkdown.md','w+', encoding="utf-8").write(markdown) as mdFile:
+                newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
+                upload(mdFile, newPage)
 
             page = row.children.add_new(BookmarkBlock)
             page.link = url
