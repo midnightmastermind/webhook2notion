@@ -4,6 +4,9 @@ from notion.client import NotionClient
 from flask import Flask
 from flask import request
 from notion.block import BookmarkBlock, TextBlock
+from urllib3 import urllib3
+from md2notion import upload
+from html2markdown import html2markdown
 
 app = Flask(__name__)
 
@@ -18,9 +21,15 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
-            page = row.children.add_new(BookmarkBlock)
-            page.link = url
-            page.title = content
+            try:
+                page = urllib3.urlopen(url).read()
+                md = html2markdown.convert(url)
+                newPage = row.children.add_new(PageBlock, title=content)
+                upload(md, newPage) #Appends the converted contents of TestMarkdown.md to newPage
+            except:
+                page = row.children.add_new(BookmarkBlock)
+                page.link = url
+                page.title = content
         else:
             page = row.children.add_new(TextBlock,title=content)
 

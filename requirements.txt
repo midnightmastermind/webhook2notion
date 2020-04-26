@@ -1,2 +1,5 @@
 Flask==0.10.1
 git+https://github.com/kevinjalbert/notion-py.git
+html2markdown
+md2notion
+urllib2
