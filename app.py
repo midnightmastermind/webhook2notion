@@ -12,9 +12,10 @@ def createNotionTask(token, collectionURL, content):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(collectionURL)
+    print(cv.collection.parent.views)
     row = cv.collection.add_row()
     row.title = content
-    
+
 @app.route('/create_note', methods=['GET'])
 def create_note():
     note = request.args.get('note')
