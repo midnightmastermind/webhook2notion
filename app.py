@@ -28,7 +28,7 @@ def create_task():
 def create_note():
     task = request.args.get('task')
     token_v2 = os.environ.get("TOKEN")
-    url = os.environ.get("ARTICLES_URL")
+    url = os.environ.get("NOTES_URL")
     createNotionTask(token_v2, url, task)
     return f'added {task} to Notion'
 
