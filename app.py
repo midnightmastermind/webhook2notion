@@ -3,7 +3,7 @@ import os
 from notion.client import NotionClient
 from flask import Flask
 from flask import request
-from notion.block import BookmarkBlock, BasicBlock
+from notion.block import BookmarkBlock, Block
 
 app = Flask(__name__)
 
@@ -22,7 +22,7 @@ def createNotionTask(token, collectionURL, content, url):
             page.link = url
             page.title = content
         else:
-            page = row.children.add_new(BasicBlock,title=content)
+            page = row.children.add_new(cBlock,title=content)
 
 
 @app.route('/create_note', methods=['GET'])
