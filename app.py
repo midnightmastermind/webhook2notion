@@ -25,12 +25,10 @@ def createNotionTask(token, collectionURL, content, url):
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
                 markdown = html2markdown.convert(r.data)
+
                 mdFile = open("markdown.md", "w")
                 mdFile.write(markdown)
                 mdFile.close()
-
-                #open and read the file after the appending:
-                mdFile = open("markdown.md", "r")
 
                 newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
                 upload(mdFile, newPage)
