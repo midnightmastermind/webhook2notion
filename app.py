@@ -25,14 +25,12 @@ def createNotionTask(token, collectionURL, content, url):
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
                 doc = pandoc.Document()
-                doc.html = re.data
+                doc.html = r.data
 
-                f = open('TestMarkdown.md','w').write(doc.markdown)
+                mdFile = open('TestMarkdown.md','w').write(doc.markdown)
+                newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
+                upload(mdFile, newPage)
 
-                with open("TestMarkdown.md", "r", encoding="utf-8") as mdFile:
-                    newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
-                    upload(mdFile, newPage)
-                    
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
                 page.title = content
