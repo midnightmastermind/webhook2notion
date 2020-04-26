@@ -35,7 +35,7 @@ def create_task():
     task = request.args.get('task')
     token_v2 = os.environ.get("TASKS_TOKEN")
     tasks_url = os.environ.get("TASKS_URL")
-    createNotionTask(token_v2, tasks_url, task, null)
+    createNotionTask(token_v2, tasks_url, task, url)
     return f'added {task} to Notion'
 
 if __name__ == '__main__':
