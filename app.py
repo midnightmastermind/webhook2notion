@@ -25,14 +25,14 @@ def create_task():
     createNotionTask(token_v2, url, task)
     return f'added {task} to Notion'
 
-@app.route('/create_note', methods=['GET'])
+@app.route('/create_task', methods=['GET'])
 def create_note():
 
-    note = request.args.get('note')
+    task = request.args.get('task')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("ARTICLES_URL")
-    createNotionTask(token_v2, url, note)
-    return f'added {note} to Notion'
+    createNotionTask(token_v2, url, task)
+    return f'added {task} to Notion'
 
 if __name__ == '__main__':
     app.debug = True
