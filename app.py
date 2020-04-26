@@ -22,21 +22,20 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
-            try:
-                http = urllib3.PoolManager()
-                r = http.request('GET', url)
+            http = urllib3.PoolManager()
+            r = http.request('GET', url)
 
-                markdown = html2text.convert(r.data)
-                mdFile = open("markdown.md", "w")
-                mdFile.write(markdown)
-                mdFile.close()
+            markdown = html2text.convert(r.data)
+            mdFile = open("markdown.md", "w")
+            mdFile.write(markdown)
+            mdFile.close()
 
-                newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
-                upload(mdFile, newPage)
-            except:
-                page = row.children.add_new(BookmarkBlock)
-                page.link = url
-                page.title = content
+            newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
+            upload(mdFile, newPage)
+
+            page = row.children.add_new(BookmarkBlock)
+            page.link = url
+            page.title = content
         else:
             page = row.children.add_new(TextBlock,title=content)
 
