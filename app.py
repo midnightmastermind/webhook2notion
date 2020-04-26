@@ -7,6 +7,7 @@ from notion.block import BookmarkBlock, TextBlock, PageBlock
 import urllib3
 from md2notion.upload import upload
 import html2markdown
+import html2text
 
 app = Flask(__name__)
 
@@ -24,9 +25,8 @@ def createNotionTask(token, collectionURL, content, url):
             try:
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
-                print(r.data)
-                markdown = html2markdown.convert(r.data)
-                print(markdown)
+
+                markdown = html2text.convert(r.data)
                 mdFile = open("markdown.md", "w")
                 mdFile.write(markdown)
                 mdFile.close()
