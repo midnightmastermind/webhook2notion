@@ -3,7 +3,7 @@ import os
 from notion.client import NotionClient
 from flask import Flask
 from flask import request
-from notion.block import BookmarkBlock, TextBlock
+from notion.block import BookmarkBlock, TextBlock, PageBlock
 import urllib3
 from md2notion import upload
 import html2markdown
