@@ -15,6 +15,7 @@ def createNotionTask(token, collectionURL, content, url):
     print(cv.collection.parent.views)
     row = cv.collection.add_row()
     row.title = content
+    row.url = url
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
