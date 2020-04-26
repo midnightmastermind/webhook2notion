@@ -5,6 +5,8 @@ from flask import Flask
 from flask import request
 from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
+from md2notion.upload import upload
+
 from bs4 import BeautifulSoup
 import urllib3
 from mdutils.mdutils import MdUtils
@@ -27,9 +29,9 @@ def createNotionTask(token, collectionURL, content, url):
             mdFile.create_md_file()
 
             mdFile.write(md)
-            # with open(mdFile, "r", encoding="utf-8") as mdFile:
-            #     newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
-            #     upload(mdFile, newPage)
+            with open(mdFile, "r", encoding="utf-8") as mdFile:
+                newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
+                upload(mdFile, newPage)
 
             page = row.children.add_new(BookmarkBlock)
             page.link = url
