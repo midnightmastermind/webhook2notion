@@ -23,7 +23,7 @@ def createNotionTask(token, collectionURL, content, url):
             html = markdown.markdown(url)
             md = "".join(BeautifulSoup(html, features="html.parser").findAll(text=True))
             with open(md, "r", encoding="utf-8") as mdFile:
-                newPage = page.children.add_new(PageBlock, title="TestMarkdown Upload")
+                newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
                 # upload(mdFile, newPage)
 
             page = row.children.add_new(BookmarkBlock)
