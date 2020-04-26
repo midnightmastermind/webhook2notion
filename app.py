@@ -8,6 +8,7 @@ import urllib3
 from md2notion.upload import upload
 import html2markdown
 import pandoc
+import pypandoc
 
 app = Flask(__name__)
 
