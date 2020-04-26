@@ -18,7 +18,7 @@ def createNotionTask(token, collectionURL, content, url):
     row.url = url
     page = row.children.add_new(EmbedBlock)
     # sets "property.source" to the URL, and "format.display_source" to the embedly-converted URL
-    video.set_source_url(url)
+    page.set_source_url(url)
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
