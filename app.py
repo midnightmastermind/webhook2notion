@@ -3,7 +3,7 @@ import os
 from notion.client import NotionClient
 from flask import Flask
 from flask import request
-
+from notion.block import EmbedBlock
 
 app = Flask(__name__)
 
@@ -16,6 +16,9 @@ def createNotionTask(token, collectionURL, content, url):
     row = cv.collection.add_row()
     row.title = content
     row.url = url
+    media = row.children.add_new(EmbedBlock, width=200)
+    # sets "property.source" to the URL, and "format.display_source" to the embedly-converted URL
+    media.set_source_url(url)
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
