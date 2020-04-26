@@ -24,7 +24,7 @@ def createNotionTask(token, collectionURL, content, url):
         if (url):
             http = urllib3.PoolManager()
             r = http.request('GET', url)
-            markdown = pypandoc.convert_text(r.data, 'md', outputFile='markdown.md')
+            markdown = pypandoc.convert_text(r.data, 'md', format='html')
             print(markdown)
             # with open('markdown.md','r', encoding="utf-8") as mdFile:
             #     newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
