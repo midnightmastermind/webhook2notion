@@ -30,8 +30,7 @@ def createNotionTask(token, collectionURL, content, url):
                 newPage = row.children.add_new(PageBlock, title=content)
                 upload(f, newPage) #Appends the converted contents of TestMarkdown.md to newPage
                 f.close()
-                os.remove(f)
-                
+
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
                 page.title = content
