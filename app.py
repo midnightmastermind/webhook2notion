@@ -31,9 +31,9 @@ def createNotionTask(token, collectionURL, content, url):
             # mdFile.write(markdown)
             # mdFile.close()
 
-            mdFile = open("markdown.md", "r")
-            newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
-            upload(mdFile, newPage)
+            # mdFile = open("markdown.md", "r")
+            # newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
+            # upload(mdFile, newPage)
 
             page = row.children.add_new(BookmarkBlock)
             page.link = url
