@@ -4,14 +4,14 @@ from notion.client import NotionClient
 from flask import Flask
 from flask import request
 from notion.block import BookmarkBlock, TextBlock, PageBlock
-import markdown from bs4 import BeautifulSoup
+import markdown
+from bs4 import BeautifulSoup
 import urllib3
 
 app = Flask(__name__)
 
 
 def createNotionTask(token, collectionURL, content, url):
-    # notion
     if (content):
         client = NotionClient(token)
         cv = client.get_collection_view(collectionURL)

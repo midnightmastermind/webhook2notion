@@ -7,3 +7,4 @@ urllib3
 gunicorn==19.9.0
 pypandoc
 beautifulsoup4
+markdown
