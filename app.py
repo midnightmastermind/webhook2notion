@@ -18,7 +18,6 @@ def createNotionTask(token, collectionURL, content):
 
 @app.route('/create_task', methods=['GET'])
 def create_task():
-
     task = request.args.get('task')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("TASKS_URL")
@@ -27,7 +26,6 @@ def create_task():
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
-
     task = request.args.get('task')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("ARTICLES_URL")
