@@ -44,8 +44,8 @@ def createNotionTask(token, collectionURL, content, url):
             md = "".join(BeautifulSoup(text, features="html.parser").findAll(text=True))
             mdFile = MdUtils(file_name='Example_Markdown',title='Markdown File Example')
             mdFile.create_md_file()
-            print(text)
-            mdFile.write(text)
+            print(md)
+            mdFile.write(md)
 
             with open(mdFile, "r", encoding="utf-8") as mdFile:
                 newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
