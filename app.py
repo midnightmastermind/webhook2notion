@@ -7,6 +7,7 @@ from notion.block import BookmarkBlock, TextBlock, PageBlock
 import urllib3
 from md2notion.upload import upload
 import html2markdown
+import pandoc
 
 app = Flask(__name__)
 
@@ -21,6 +22,17 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
+                http = urllib3.PoolManager()
+                r = http.request('GET', url)
+                doc = pandoc.Document()
+                doc.html = re.data
+
+                f = open('TestMarkdown.md','w').write(doc.markdown)
+
+                with open("TestMarkdown.md", "r", encoding="utf-8") as mdFile:
+                    newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
+                    upload(mdFile, newPage)
+                    
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
                 page.title = content
