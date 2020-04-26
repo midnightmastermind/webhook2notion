@@ -25,8 +25,8 @@ def createNotionTask(token, collectionURL, content, url):
             http = urllib3.PoolManager()
             r = http.request('GET', url)
 
-            markdown = html2text.convert(r.data)
-            print(markdown)
+            # markdown = html2text.convert(r.data)
+            # print(markdown)
             # mdFile = open("markdown.md", "w")
             # mdFile.write(markdown)
             # mdFile.close()
