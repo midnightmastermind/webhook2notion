@@ -21,8 +21,9 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
-                page = urllib3.urlopen(url).read()
-                md = html2markdown.convert(url)
+                http = urllib3.PoolManager()
+                r = http.request('GET', url)
+                md = html2markdown.convert(r.data)
                 newPage = row.children.add_new(PageBlock, title=content)
                 upload(md, newPage) #Appends the converted contents of TestMarkdown.md to newPage
 
