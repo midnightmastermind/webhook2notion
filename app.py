@@ -25,7 +25,7 @@ def createNotionTask(token, collectionURL, content, url):
             r = http.request('GET', url)
             markdown = html2markdown.convert(r.data)
             mdFile = open("markdown.md", "w")
-            mdFile.write("Now the file has more content!")
+            mdFile.write(markdown)
             mdFile.close()
 
             #open and read the file after the appending:
