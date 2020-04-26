@@ -26,6 +26,7 @@ def createNotionTask(token, collectionURL, content, url):
             http = urllib3.PoolManager()
             r = http.request('GET', url)
             html = markdown.markdown(r.data)
+            print(html)
             md = "".join(BeautifulSoup(html, "xml"))
 
             print(md)
