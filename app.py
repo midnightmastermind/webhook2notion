@@ -22,7 +22,7 @@ def createNotionTask(token, collectionURL, content, url):
             page.link = url
             page.title = content
         else:
-            page = row.children.add_new(cBlock,title=content)
+            page = row.children.add_new(Block,title=content)
 
 
 @app.route('/create_note', methods=['GET'])
