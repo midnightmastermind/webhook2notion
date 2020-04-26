@@ -21,7 +21,7 @@ def createNotionTask(token, collectionURL, content, url):
         row.url = url
         if (url):
             html = markdown.markdown(url)
-            md = "".join(BeautifulSoup(html).findAll(text=True))
+            md = "".join(BeautifulSoup(html, features="html.parser").findAll(text=True))
             with open(md, "r", encoding="utf-8") as mdFile:
                 newPage = page.children.add_new(PageBlock, title="TestMarkdown Upload")
                 upload(mdFile, newPage)
