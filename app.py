@@ -74,7 +74,7 @@ def createNotionTask(token, collectionURL, content, url):
 
 
             def convertImagePath(imagePath, mdFilePath):
-                print(os.path.abspath(pathlib.Path().absolute() / Path(imagePath)))
+                print(os.path.abspath(pathlib.Path().absolute() + imagePath))
                 return Path(os.path.abspath(pathlib.Path().absolute() / Path(imagePath)))
             # Upload all the blocks
             for blockDescriptor in rendered:
