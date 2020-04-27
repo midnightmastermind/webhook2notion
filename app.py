@@ -31,11 +31,11 @@ def createNotionTask(token, collectionURL, content, url):
         print(cv.collection.parent.views)
         row = cv.collection.add_row()
 
-        if('#task' in content):
-            content = content.replace('#task', '')
-
         if('task:' in content):
             content = content.replace('task:', '')
+
+        if('Task:' in content):
+            content = content.replace('Task:', '')
 
         row.title = content
 
