@@ -49,9 +49,9 @@ def createNotionTask(token, collectionURL, content, url):
             soup = BeautifulSoup(str(r.data), 'html.parser')
             section = soup.section
             domain = urllib.parse.urlparse(url).netloc
+            print(domain)
             for web_url in section.find_all('img'):
                 print(urllib.parse.urljoin(domain,web_url.get('src')))
-                web_url.set
 
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
