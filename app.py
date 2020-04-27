@@ -44,11 +44,12 @@ def createNotionTask(token, collectionURL, content, url):
             row.url = url
             http = urllib3.PoolManager()
             r = http.request('GET', url)
-            root = etree.fromstring(str(r.data))
+            text = pypandoc.convert_text(r.data, 'xml', format='html')
+            root = etree.fromstring(text)
             doc = Document(etree.tostring(root))
             text = doc.summary()
             print(text)
-            output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
+            output = pypandoc.convert_text(text, 'gfm-raw_html', format='xml')
             rendered = convert(output)
 
             # Process the rendered array of `notion-py` block descriptors here
