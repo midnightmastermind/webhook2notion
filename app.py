@@ -40,7 +40,6 @@ def createNotionTask(token, collectionURL, content, url):
                 text = doc.summary()
 
                 output = pypandoc.convert_text(text, 'markdown_github-raw_html', format='html')
-                page = row.children.add_new(PageBlock, title=doc.title())
                 rendered = convert(output)
 
                 # Process the rendered array of `notion-py` block descriptors here
@@ -48,7 +47,7 @@ def createNotionTask(token, collectionURL, content, url):
 
                 # Upload all the blocks
                 for blockDescriptor in rendered:
-                    uploadBlock(blockDescriptor, page, doc.title())
+                    uploadBlock(blockDescriptor, row, doc.title())
             except:
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
