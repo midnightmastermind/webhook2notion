@@ -6,7 +6,7 @@ from flask import request
 from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
 from md2notion.upload import convert, uploadBlock
-
+import cgitb
 import urllib3
 
 from readability.readability import Document
@@ -75,6 +75,7 @@ def create_task():
     task = request.args.get('task')
     token_v2 = os.environ.get("TASKS_TOKEN")
     tasks_url = os.environ.get("TASKS_URL")
+
     q.enqueue(createNotionTask(token_v2, tasks_url, task, url))
     return f'added {task} to Notion'
 
