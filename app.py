@@ -32,6 +32,7 @@ def createNotionTask(token, collectionURL, content, url):
         row.url = url
 
         if (url):
+            print("wtf3")
             try:
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
