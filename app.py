@@ -68,9 +68,8 @@ def createNotionTask(token, collectionURL, content, url):
                 img = r.data
 
                 os.makedirs(os.path.dirname(relative_url), exist_ok=True)
-
-                with open(relative_url, 'w') as f:
-                    f.write(str(img))
+                with open(relative_url, 'wb') as f:
+                    f.write(img)
 
                 return Path(os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
             # Upload all the blocks
