@@ -58,6 +58,7 @@ def createNotionTask(token, collectionURL, content, url):
             text = doc.summary()
 
             output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
+            output = output.replace('\n', '<br />')
             rendered = convert(output)
 
 
