@@ -12,7 +12,7 @@ import urllib3
 from mdutils.mdutils import MdUtils
 
 import requests
-from readability import Document
+from readability.readability import Document
 
 from pypandoc.pandoc_download import download_pandoc
 import pypandoc
