@@ -49,7 +49,7 @@ def createNotionTask(token, collectionURL, content, url):
                 # Upload all the blocks
                 for blockDescriptor in rendered:
                     uploadBlock(blockDescriptor, newPage, doc.title())
-            except:s
+            except:
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
                 page.title = content
