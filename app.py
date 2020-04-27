@@ -51,7 +51,7 @@ def createNotionTask(token, collectionURL, content, url):
             section = soup.section
 
             for web_url in section.find_all('base'):
-                urljoin(url,web_url.get('href'))
+                http.urljoin(url,web_url.get('href'))
 
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
