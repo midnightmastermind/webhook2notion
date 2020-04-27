@@ -33,19 +33,20 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
-            http = urllib3.PoolManager()
-            r = http.request('GET', url)
-            doc = Document(r.data)
-            text = doc.summary()
+            try:
+                http = urllib3.PoolManager()
+                r = http.request('GET', url)
+                doc = Document(r.data)
+                text = doc.summary()
 
-            output = pypandoc.convert_text(text, 'md', format='html').encode('utf-8')
-            newPage = row.children.add_new(PageBlock, title=doc.title())
-            test = str(output)
-            convert(test, newPage)
-
-            page = row.children.add_new(BookmarkBlock)
-            page.link = url
-            page.title = content
+                output = pypandoc.convert_text(text, 'md', format='html').encode('utf-8')
+                newPage = row.children.add_new(PageBlock, title=doc.title())
+                test = str(output)
+                convert(test, newPage)
+            except:
+                page = row.children.add_new(BookmarkBlock)
+                page.link = url
+                page.title = content
         else:
             page = row.children.add_new(TextBlock,title=content)
 
