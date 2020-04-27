@@ -64,10 +64,11 @@ def createNotionTask(token, collectionURL, content, url):
 
             # Process the rendered array of `notion-py` block descriptors here
             # (just dicts with some properties to pass to `notion-py`)
-
+            def convertImagePath(imagePath, mdFilePath):
+                return Path(mdFilePath).parent / Path(mdFilePath).stem / Path(imagePath)
             # Upload all the blocks
             for blockDescriptor in rendered:
-                uploadBlock(blockDescriptor, row, doc.title())
+                uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
 
             page = row.children.add_new(BookmarkBlock)
             page.link = url
