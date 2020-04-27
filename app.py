@@ -40,8 +40,7 @@ def createNotionTask(token, collectionURL, content, url):
 
                 output = pypandoc.convert_text(text, 'md', format='html').encode('utf-8')
                 newPage = row.children.add_new(PageBlock, title=doc.title())
-                test = str(output)
-                rendered = convert(test)
+                rendered = convert(output)
 
                 # Process the rendered array of `notion-py` block descriptors here
                 # (just dicts with some properties to pass to `notion-py`)
