@@ -7,6 +7,7 @@ from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
 from md2notion.upload import convert, uploadBlock
 import urllib3
+from urllib.parse import urlparse
 from urlparse import urljoin
 from lxml import etree
 from bs4 import BeautifulSoup
