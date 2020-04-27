@@ -56,8 +56,6 @@ def createNotionTask(token, collectionURL, content, url):
         else:
             page = row.children.add_new(TextBlock, title=content)
 
-        return page
-
 @app.route('/create_note', methods=['GET'])
 def create_note():
     note = request.args.get('note')
