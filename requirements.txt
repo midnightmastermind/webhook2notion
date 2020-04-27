@@ -9,3 +9,4 @@ readability-lxml
 mistletoe
 rq
 redis
+jsonify
