@@ -32,7 +32,7 @@ def createNotionTask(token, collectionURL, content, url):
             r = http.request('GET', url)
             output = pypandoc.convert_text(r.data, 'md', format='html')
 
-            soup = BeautifulSoup(output, "html.parser")
+            soup = "".join(BeautifulSoup(output, "xml").findAll(text=True))
 
             # kill all script and style elements
             for script in soup(["script", "style"]):
