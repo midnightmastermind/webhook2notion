@@ -36,7 +36,7 @@ def createNotionTask(token, collectionURL, content, url):
             http = urllib3.PoolManager()
             r = http.request('GET', url)
             doc = Document(r.data)
-            print('wtf2')
+            print(doc.summary())
             output = pypandoc.convert_file(doc.summary(), 'md', format='html')
             newPage = row.children.add_new(PageBlock, title=doc.title())
             print('wtf4')
