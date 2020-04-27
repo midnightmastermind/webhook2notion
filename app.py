@@ -32,7 +32,7 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
-            response = requests.get(url))
+            response = requests.get(url)
             doc = Document(response)
             output = pypandoc.convert_file(doc.summary(), 'md', format='html')
             newPage = row.children.add_new(PageBlock, title=doc.title())
