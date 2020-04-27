@@ -64,7 +64,7 @@ def create_note():
     token_v2 = os.environ.get("NOTES_TOKEN")
     notes_url = os.environ.get("NOTES_URL")
 
-    page = q.equeue(createNotionTask(token_v2, notes_url, note, url))
+    page = q.enqueue(createNotionTask(token_v2, notes_url, note, url))
     return page
 
 
