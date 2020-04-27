@@ -48,6 +48,7 @@ def createNotionTask(token, collectionURL, content, url):
             tree = etree.parse(str(r.data), parser)
             doc = Document(tree.getroot())
             text = doc.summary()
+            print('wtf')
 
             output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
             rendered = convert(output)
