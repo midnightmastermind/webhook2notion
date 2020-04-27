@@ -37,6 +37,7 @@ def createNotionTask(token, collectionURL, content, url):
             r = http.request('GET', url)
             doc = Document(r.data)
             text = doc.summary()
+            print('wtf3')
             output = pypandoc.convert_file(text, 'md', format='html')
             print(output)
             print('wtf3')
