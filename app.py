@@ -64,7 +64,7 @@ def createNotionTask(token, collectionURL, content, url):
 
                 print(relative_path)
                 with open(relative_path, 'w') as f:
-                    f.write(img)
+                    f.write(img.decode('utf-8'))
 
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
