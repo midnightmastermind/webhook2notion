@@ -51,18 +51,16 @@ def createNotionTask(token, collectionURL, content, url):
             r = http.request('GET', url)
             soup = BeautifulSoup(str(r.data), 'html.parser')
 
-            parsed_url = urllib.parse.urlparse(url)
-            domain = parsed_url.scheme + '://' + parsed_url.netloc
-
-
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
 
-            output = pypandoc.convert_text(output, 'markdown_github-raw_html', format='html')
+            output = pypandoc.convert_text(output, 'gfm-raw_html', format='html')
             rendered = convert(output)
 
 
             def convertImagePath(imagePath, mdFilePath):
+                parsed_url = urllib.parse.urlparse(url)
+                domain = parsed_url.scheme + '://' + parsed_url.netloc
                 relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath)
                 new_url = urllib.parse.urljoin(domain, imagePath)
                 r = http.request('GET', new_url)
@@ -73,6 +71,7 @@ def createNotionTask(token, collectionURL, content, url):
                     f.write(img)
 
                 return Path(os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
+
             # Upload all the blocks
             for blockDescriptor in rendered:
                 uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
