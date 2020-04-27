@@ -10,6 +10,10 @@ from md2notion.upload import upload
 from bs4 import BeautifulSoup
 import urllib3
 from mdutils.mdutils import MdUtils
+
+import requests
+from readability import Document
+
 from pypandoc.pandoc_download import download_pandoc
 import pypandoc
 # see the documentation how to customize the installation path
@@ -29,8 +33,10 @@ def createNotionTask(token, collectionURL, content, url):
         row.url = url
         if (url):
             output = pypandoc.convert_file(url, 'md', format='html')
-            newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
-            upload(output, newPage)
+            doc = Document(output)
+
+            newPage = row.children.add_new(PageBlock, title=doc.title())
+            upload(doc.summary(), newPage)
 
             page = row.children.add_new(BookmarkBlock)
             page.link = url

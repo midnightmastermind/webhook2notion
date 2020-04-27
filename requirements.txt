@@ -10,3 +10,4 @@ beautifulsoup4
 markdown
 mdutils
 pypandoc
+readability-lxml
