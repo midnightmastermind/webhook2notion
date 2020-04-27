@@ -32,9 +32,8 @@ def createNotionTask(token, collectionURL, content, url):
         row = cv.collection.add_row()
         row.title = content
         row.url = url
-        print(url)
+
         if (url):
-            print("yes")
             try:
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
@@ -55,9 +54,9 @@ def createNotionTask(token, collectionURL, content, url):
                 page.link = url
                 page.title = content
         else:
-            print("wtf");
-            page = row.children.add_new(TextBlock)
-            page.title = content
+            page = row.children.add_new(TextBlock, title=content)
+
+        return page
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
