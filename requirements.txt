@@ -1,4 +1,4 @@
-Flask==0.10.1
+Flask==1.0
 git+https://github.com/kevinjalbert/notion-py.git
 md2notion
 urllib3
