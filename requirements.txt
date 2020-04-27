@@ -7,3 +7,4 @@ gunicorn==19.9.0
 pypandoc
 readability-lxml
 mistletoe
+rq
