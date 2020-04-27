@@ -54,7 +54,7 @@ def createNotionTask(token, collectionURL, content, url):
                 page.title = content
         else:
             page = row.children.add_new(TextBlock,title=content)
-    return page
+
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
@@ -63,8 +63,8 @@ def create_note():
     token_v2 = os.environ.get("NOTES_TOKEN")
     notes_url = os.environ.get("NOTES_URL")
 
-    page = q.enqueue(createNotionTask(token_v2, notes_url, note, url))
-    return page
+    q.enqueue(createNotionTask(token_v2, notes_url, note, url))
+    return f'added {note} to Notion'
 
 
 @app.route('/create_task', methods=['GET'])
@@ -73,8 +73,8 @@ def create_task():
     task = request.args.get('task')
     token_v2 = os.environ.get("TASKS_TOKEN")
     tasks_url = os.environ.get("TASKS_URL")
-    page = q.enqueue(createNotionTask(token_v2, tasks_url, task, url))
-    return page
+    q.enqueue(createNotionTask(token_v2, tasks_url, task, url))
+    return f'added {task} to Notion'
 
 if __name__ == '__main__':
     app.debug = True
