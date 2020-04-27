@@ -55,6 +55,7 @@ def createNotionTask(token, collectionURL, content, url):
                 page.link = url
                 page.title = content
         else:
+            print("wtf");
             page = row.children.add_new(TextBlock)
             page.title = content
 
