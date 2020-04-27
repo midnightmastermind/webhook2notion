@@ -44,7 +44,7 @@ def createNotionTask(token, collectionURL, content, url):
             row.url = url
             http = urllib3.PoolManager()
             r = http.request('GET', url)
-            parser = etree.XMLParser(ns_clean=True)
+            parser = etree.XMLParser()
             tree = etree.parse(str(r.data), parser)
             doc = Document(etree.tostring(tree.getroot()))
             text = doc.summary()
