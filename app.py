@@ -5,8 +5,7 @@ from flask import Flask
 from flask import request
 from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
-from md2notion.upload import convert, uploadBlock, upload
-
+from md2notion.upload import convert, uploadBlock
 import urllib3
 from lxml import etree
 from bs4 import BeautifulSoup
@@ -47,20 +46,23 @@ def createNotionTask(token, collectionURL, content, url):
             http = urllib3.PoolManager()
             r = http.request('GET', url)
             soup = BeautifulSoup(str(r.data), 'html.parser')
+            section = soup.section
 
+            for web_url in section.find_all('image'):
+                print urljoin(url,web_url.get('href'))
+                
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
 
             output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
-            upload(output, row)
-            # rendered = convert(output)
-            #
-            # # Process the rendered array of `notion-py` block descriptors here
-            # # (just dicts with some properties to pass to `notion-py`)
-            #
-            # # Upload all the blocks
-            # for blockDescriptor in rendered:
-            #     uploadBlock(blockDescriptor, row, doc.title())
+            rendered = convert(output)
+
+            # Process the rendered array of `notion-py` block descriptors here
+            # (just dicts with some properties to pass to `notion-py`)
+
+            # Upload all the blocks
+            for blockDescriptor in rendered:
+                uploadBlock(blockDescriptor, row, doc.title())
 
             page = row.children.add_new(BookmarkBlock)
             page.link = url
