@@ -10,6 +10,7 @@ import urllib3
 import urllib.parse
 from lxml import etree
 from bs4 import BeautifulSoup
+from pathlib import Path
 
 from readability.readability import Document
 from io import StringIO, BytesIO
@@ -64,7 +65,7 @@ def createNotionTask(token, collectionURL, content, url):
 
 
             def convertImagePath(imagePath, mdFilePath):
-                return mdFilePath + imagePath
+                return Path(mdFilePath) + Path(imagePath)
             # Upload all the blocks
             for blockDescriptor in rendered:
                 uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
