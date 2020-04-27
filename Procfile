@@ -1,1 +1,1 @@
-web: gunicorn --preload app:app --timeout=120
+web: gunicorn --preload app:app --timeout 15 --keep-alive 5 --log-level debug
