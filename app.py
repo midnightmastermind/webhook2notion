@@ -51,11 +51,10 @@ def createNotionTask(token, collectionURL, content, url):
             r = http.request('GET', url)
             soup = BeautifulSoup(str(r.data), 'html.parser')
 
-            doc = Document(soup.prettify(formatter="html"))
+            doc = Document(soup.prettify(formatter="xml"))
             text = doc.summary()
 
-            output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
-            output = md(output)
+            output = pypandoc.convert_text(text, 'gfm-raw_html', format='md')
             rendered = convert(output)
 
 
