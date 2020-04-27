@@ -31,9 +31,10 @@ def createNotionTask(token, collectionURL, content, url):
         print(cv.collection.parent.views)
         row = cv.collection.add_row()
         row.title = content
-        row.url = url
+
 
         if (url and "http://ifttt.com/missing_link" not in url):
+            row.url = url
             try:
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
