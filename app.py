@@ -65,6 +65,7 @@ def createNotionTask(token, collectionURL, content, url):
                         path = path.encode('utf8')
                     return 'file:' + urlparse.pathname2url(path)
                 relative_path = parth2url(str(pathlib.Path().absolute()),web_url.get('src'))
+                print(relative_path)
                 with open(relative_path, 'a+') as f:
                     f.write(img)
 
