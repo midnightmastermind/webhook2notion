@@ -6,8 +6,6 @@ from flask import request
 from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
 from md2notion.upload import convert, uploadBlock
-import cgitb
-cgitb.enable()
 import urllib3
 
 from readability.readability import Document
