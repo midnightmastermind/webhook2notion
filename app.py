@@ -10,6 +10,7 @@ import urllib3
 import urllib.parse
 from lxml import etree
 from bs4 import BeautifulSoup
+import pathlib
 from pathlib import Path
 
 from readability.readability import Document
@@ -57,7 +58,8 @@ def createNotionTask(token, collectionURL, content, url):
                 new_url = urllib.parse.urljoin(domain,web_url.get('src'))
                 r = http.request('GET', new_url)
                 img = r.data
-                with open(web_url.get('src'), 'w+') as f:
+                relative_path = pathlib.Path().absolute() + web_url.get('src')
+                with open(relative_path, 'w+') as f:
                     f.write(img)
 
             doc = Document(soup.prettify(formatter="html"))
