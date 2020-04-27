@@ -32,13 +32,12 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
-            print('wtf1')
             http = urllib3.PoolManager()
             r = http.request('GET', url)
             doc = Document(r.data)
             text = doc.summary()
-            print('wtf3')
-            output = pypandoc.convert_file(text, 'md', format='html')
+
+            output = pypandoc.convert_text(text, 'md', format='html')
             print(output)
             print('wtf3')
             newPage = row.children.add_new(PageBlock, title=doc.title())
