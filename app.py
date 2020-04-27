@@ -32,10 +32,13 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
+            print('wtf1')
             response = requests.get(url)
             doc = Document(response)
+            print('wtf2')
             output = pypandoc.convert_file(doc.summary(), 'md', format='html')
             newPage = row.children.add_new(PageBlock, title=doc.title())
+            print('wtf4')
             upload(output, newPage)
 
             page = row.children.add_new(BookmarkBlock)
