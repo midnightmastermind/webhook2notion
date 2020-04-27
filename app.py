@@ -45,7 +45,7 @@ def createNotionTask(token, collectionURL, content, url):
             http = urllib3.PoolManager()
             r = http.request('GET', url)
             root = etree.fromstring(r.data)
-            doc = Document(root)
+            doc = Document(etree.tostring(root))
             text = doc.summary()
             print(text)
             output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
