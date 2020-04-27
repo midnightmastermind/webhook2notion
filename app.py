@@ -14,12 +14,15 @@ from readability.readability import Document
 from pypandoc.pandoc_download import download_pandoc
 import pypandoc
 
+from rq import Queue
+from worker import conn
+
 # see the documentation how to customize the installation path
 # but be aware that you then need to include it in the `PATH`
 download_pandoc()
 
 app = Flask(__name__)
-
+q = Queue(connection=conn)
 
 def createNotionTask(token, collectionURL, content, url):
     if (content):
@@ -45,7 +48,7 @@ def createNotionTask(token, collectionURL, content, url):
 
                 # Upload all the blocks
                 for blockDescriptor in rendered:
-                    uploadBlock(blockDescriptor, newPage, doc.title())
+                    q.enqueue(uploadBlock(blockDescriptor, newPage, doc.title()))
             except:
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
