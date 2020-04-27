@@ -28,9 +28,8 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
-            http = urllib3.PoolManager()
-            r = http.request('GET', url)
-            output = pypandoc.convert_text(r.data, 'md', format='html')
+            output = pypandoc.covert_file(url, 'md', format='html',,
+            extra_args=['--latex-engine=xelatex', '-V', 'geometry:margin=1.5cm'])
 
             soup = "".join(BeautifulSoup(output, "xml").findAll(text=True))
 
