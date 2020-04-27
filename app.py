@@ -62,10 +62,9 @@ def createNotionTask(token, collectionURL, content, url):
             output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
             rendered = convert(output)
 
-            # Process the rendered array of `notion-py` block descriptors here
-            # (just dicts with some properties to pass to `notion-py`)
+
             def convertImagePath(imagePath, mdFilePath):
-                return Path(mdFilePath).parent / Path(mdFilePath).stem / Path(imagePath)
+                return mdFilePath + imagePath
             # Upload all the blocks
             for blockDescriptor in rendered:
                 uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
