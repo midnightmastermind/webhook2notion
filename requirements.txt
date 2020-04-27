@@ -3,6 +3,7 @@ git+https://github.com/kevinjalbert/notion-py.git
 md2notion
 urllib3
 markdown
+gunicorn==19.9.0
 pypandoc
 readability-lxml
 mistletoe
