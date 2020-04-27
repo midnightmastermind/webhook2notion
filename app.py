@@ -62,7 +62,7 @@ def createNotionTask(token, collectionURL, content, url):
 
 
             def convertImagePath(imagePath, mdFilePath):
-                relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
+                relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath)
                 new_url = urllib.parse.urljoin(domain, imagePath)
                 r = http.request('GET', new_url)
                 img = r.data
