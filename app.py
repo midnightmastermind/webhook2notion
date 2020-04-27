@@ -33,7 +33,7 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
 
-        if (url):
+        if (url and url != "http://ifttt.com/missing_link?1587995318"):
             try:
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
@@ -66,7 +66,7 @@ def create_note():
 
     try:
         job = q.enqueue_call(func=createNotionTask, args=(token_v2, notes_url, note, url), result_ttl=5000)
-        return f'added {note} to Notion'
+        return f'added {note} to Queue'
         print(job.get_id())
     except:
         return f'added {note} to Queue'
