@@ -30,8 +30,11 @@ def createNotionTask(token, collectionURL, content, url):
         cv = client.get_collection_view(collectionURL)
         print(cv.collection.parent.views)
         row = cv.collection.add_row()
-        row.title = content
 
+        if('#task' in content) {
+            content.replace('#task', '')
+        }
+        row.title = content
 
         if (url and "http://ifttt.com/missing_link" not in url):
             row.url = url
