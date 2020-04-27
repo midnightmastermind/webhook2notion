@@ -49,22 +49,10 @@ def createNotionTask(token, collectionURL, content, url):
             http = urllib3.PoolManager()
             r = http.request('GET', url)
             soup = BeautifulSoup(str(r.data), 'html.parser')
-            section = soup.section
+
             parsed_url = urllib.parse.urlparse(url)
             domain = parsed_url.scheme + '://' + parsed_url.netloc
 
-            for web_url in section.find_all('img'):
-                new_url = urllib.parse.urljoin(domain,web_url.get('src'))
-                r = http.request('GET', new_url)
-                img = r.data
-
-                relative_path = os.path.abspath(str(pathlib.Path().absolute())+web_url.get('src'))
-
-                os.makedirs(os.path.dirname(relative_path), exist_ok=True)
-
-                print(relative_path)
-                with open(relative_path, 'w') as f:
-                    f.write(str(img))
 
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
@@ -74,7 +62,16 @@ def createNotionTask(token, collectionURL, content, url):
 
 
             def convertImagePath(imagePath, mdFilePath):
-                print(os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
+                relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
+                new_url = urllib.parse.urljoin(domain, imagePath)
+                r = http.request('GET', new_url)
+                img = r.data
+
+                os.makedirs(os.path.dirname(relative_url), exist_ok=True)
+
+                with open(relative_url, 'w') as f:
+                    f.write(str(img))
+
                 return Path(os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
             # Upload all the blocks
             for blockDescriptor in rendered:
