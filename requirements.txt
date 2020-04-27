@@ -11,4 +11,3 @@ rq
 redis
 jsonify
 lxml
-io
