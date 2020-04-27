@@ -14,6 +14,7 @@ from pypandoc.pandoc_download import download_pandoc
 import pypandoc
 
 from rq import Queue
+from rq.job import Job
 from worker import conn
 
 # see the documentation how to customize the installation path
@@ -21,6 +22,7 @@ from worker import conn
 download_pandoc()
 
 app = Flask(__name__)
+q = Queue(connection=conn)
 
 def createNotionTask(token, collectionURL, content, url):
     if (content):
@@ -32,7 +34,6 @@ def createNotionTask(token, collectionURL, content, url):
         row.url = url
 
         if (url):
-            print("wtf3")
             try:
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
@@ -53,9 +54,7 @@ def createNotionTask(token, collectionURL, content, url):
                 page.link = url
                 page.title = content
         else:
-            print("wtf")
             row.children.add_new(TextBlock, title=content)
-            print("wtf2")
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
@@ -65,6 +64,8 @@ def create_note():
     notes_url = os.environ.get("NOTES_URL")
 
     createNotionTask(token_v2, notes_url, note, url)
+    job = q.enqueue_call(func=createNotionTask, args=(token_v2, notes_url, note, url), result_ttl=5000)
+    print(job.get_id())
     return f'added {note} to Notion'
 
 
@@ -75,8 +76,19 @@ def create_task():
     token_v2 = os.environ.get("TASKS_TOKEN")
     tasks_url = os.environ.get("TASKS_URL")
 
-    createNotionTask(token_v2, tasks_url, task, url)
+    job = q.enqueue_call(func=createNotionTask, args=(token_v2, tasks_url, task, url), result_ttl=5000)
+    print(job.get_id())
     return f'added {task} to Notion'
+
+@app.route("/results/<job_key>", methods=['GET'])
+def get_results(job_key):
+
+    job = Job.fetch(job_key, connection=conn)
+
+    if job.is_finished:
+        return str(job.result), 200
+    else:
+        return "Nay!", 202
 
 if __name__ == '__main__':
     app.debug = True
