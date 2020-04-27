@@ -31,16 +31,8 @@ def createNotionTask(token, collectionURL, content, url):
             print("wtf1")
             output = pypandoc.convert_file(url, 'md', format='html')
             print("wtf2")
-            soup = "".join(BeautifulSoup(output, "xml").findAll(text=True))
 
-            # kill all script and style elements
-            for script in soup(["script", "style"]):
-                script.extract()    # rip it out
-
-            # get text
-            text = soup.get_text()
-
-            print(text)
+            print(output)
             newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
             upload(md, newPage)
 
