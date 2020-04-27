@@ -42,26 +42,25 @@ def createNotionTask(token, collectionURL, content, url):
 
         if (url and "http://ifttt.com/missing_link" not in url):
             row.url = url
-            try:
-                http = urllib3.PoolManager()
-                r = http.request('GET', url)
-                root = etree.fromstring(r.data)
-                doc = Document(root)
-                text = doc.summary()
-                print(text)
-                output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
-                rendered = convert(output)
+            http = urllib3.PoolManager()
+            r = http.request('GET', url)
+            root = etree.fromstring(r.data)
+            doc = Document(root)
+            text = doc.summary()
+            print(text)
+            output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
+            rendered = convert(output)
 
-                # Process the rendered array of `notion-py` block descriptors here
-                # (just dicts with some properties to pass to `notion-py`)
+            # Process the rendered array of `notion-py` block descriptors here
+            # (just dicts with some properties to pass to `notion-py`)
 
-                # Upload all the blocks
-                for blockDescriptor in rendered:
-                    uploadBlock(blockDescriptor, row, doc.title())
-            except:
-                page = row.children.add_new(BookmarkBlock)
-                page.link = url
-                page.title = content
+            # Upload all the blocks
+            for blockDescriptor in rendered:
+                uploadBlock(blockDescriptor, row, doc.title())
+
+            page = row.children.add_new(BookmarkBlock)
+            page.link = url
+            page.title = content
         else:
             row.children.add_new(TextBlock, title=content)
         return content
