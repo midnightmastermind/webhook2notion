@@ -12,6 +12,7 @@ from lxml import etree
 from bs4 import BeautifulSoup
 import pathlib
 from pathlib import Path
+from markdownify import markdownify as md
 
 from readability.readability import Document
 from io import StringIO, BytesIO
@@ -57,8 +58,8 @@ def createNotionTask(token, collectionURL, content, url):
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
 
-            output = pypandoc.convert_text(text, 'markdown_github-raw_html', format='html')
-            output = output.replace('\\n', '\n')
+            output = md(text)
+            # output = pypandoc.convert_text(output, 'markdown_github-raw_html', format='html')
             rendered = convert(output)
 
 

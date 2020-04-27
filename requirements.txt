@@ -12,3 +12,4 @@ redis
 jsonify
 lxml
 bs4
+markdownify
