@@ -49,9 +49,9 @@ def createNotionTask(token, collectionURL, content, url):
             row.url = url
             http = urllib3.PoolManager()
             r = http.request('GET', url)
-            soup = BeautifulSoup(str(r.data), 'html.parser')
+            soup = BeautifulSoup(str(r.data), 'lxml')
 
-            doc = Document(soup.prettify(formatter="xml"))
+            doc = Document(soup.prettify(formatter="lxml"))
             text = doc.summary()
 
             output = pypandoc.convert_text(text, 'gfm-raw_html', format='markdown')
