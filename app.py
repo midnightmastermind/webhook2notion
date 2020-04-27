@@ -46,42 +46,43 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
 
         if (url and "http://ifttt.com/missing_link" not in url):
-            row.url = url
-            http = urllib3.PoolManager()
-            r = http.request('GET', url)
-            soup = BeautifulSoup(str(r.data), 'html.parser')
+            try:
+                row.url = url
+                http = urllib3.PoolManager()
+                r = http.request('GET', url)
+                soup = BeautifulSoup(str(r.data), 'html.parser')
 
-            doc = Document(soup.prettify(formatter="html"))
-            text = doc.summary()
+                doc = Document(soup.prettify(formatter="html"))
+                text = doc.summary()
 
-            output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
-            output = output.replace('\\\\n', '\n')
-            output = output.replace("\\\\'", "\'")
-            print(output)
-            rendered = convert(output)
+                output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
+                output = output.replace('\\\\n', '')
+                output = output.replace("\\\\'", "\'")
+                print(output)
+                rendered = convert(output)
 
 
-            def convertImagePath(imagePath, mdFilePath):
-                parsed_url = urllib.parse.urlparse(url)
-                domain = parsed_url.scheme + '://' + parsed_url.netloc
-                relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath)
-                new_url = urllib.parse.urljoin(domain, imagePath)
-                r = http.request('GET', new_url)
-                img = r.data
+                def convertImagePath(imagePath, mdFilePath):
+                    parsed_url = urllib.parse.urlparse(url)
+                    domain = parsed_url.scheme + '://' + parsed_url.netloc
+                    relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath)
+                    new_url = urllib.parse.urljoin(domain, imagePath)
+                    r = http.request('GET', new_url)
+                    img = r.data
 
-                os.makedirs(os.path.dirname(relative_url), exist_ok=True)
-                with open(relative_url, 'wb') as f:
-                    f.write(img)
+                    os.makedirs(os.path.dirname(relative_url), exist_ok=True)
+                    with open(relative_url, 'wb') as f:
+                        f.write(img)
 
-                return Path(os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
+                    return Path(os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
 
-            # Upload all the blocks
-            for blockDescriptor in rendered:
-                uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
-
-            page = row.children.add_new(BookmarkBlock)
-            page.link = url
-            page.title = content
+                # Upload all the blocks
+                for blockDescriptor in rendered:
+                    uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
+            except:
+                page = row.children.add_new(BookmarkBlock)
+                page.link = url
+                page.title = content
         else:
             row.children.add_new(TextBlock, title=content)
         return content
