@@ -33,6 +33,7 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
         if (url):
+            try:
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
                 doc = Document(r.data)
@@ -48,7 +49,7 @@ def createNotionTask(token, collectionURL, content, url):
                 # Upload all the blocks
                 for blockDescriptor in rendered:
                     uploadBlock(blockDescriptor, newPage, doc.title())
-
+            except:
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
                 page.title = content
