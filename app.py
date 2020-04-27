@@ -66,11 +66,10 @@ def create_note():
 
     try:
         job = q.enqueue_call(func=createNotionTask, args=(token_v2, notes_url, note, url), result_ttl=5000)
+        return f'added {note} to Notion'
         print(job.get_id())
     except:
-        return f'added {note} to Notion'
-    return f'added {note} to Notion'
-
+        return f'added {note} to Queue'
 
 @app.route('/create_task', methods=['GET'])
 def create_task():
@@ -82,10 +81,11 @@ def create_task():
     try:
         job = q.enqueue_call(func=createNotionTask, args=(token_v2, tasks_url, task, url), result_ttl=5000)
         print(job.get_id())
+        return f'added {note} to Notion'
     except:
-        return f'added {task} to Notion'
-    return f'added {task} to Notion'
-    
+        return f'added {task} to Queue'
+
+
 @app.route("/results/<job_key>", methods=['GET'])
 def get_results(job_key):
 
