@@ -34,6 +34,8 @@ def createNotionTask(token, collectionURL, content, url):
         if('#task' in content):
             content.replace('#task', '')
 
+        if('task:' in content):
+            content.replace('task:', '')
         row.title = content
 
         if (url and "http://ifttt.com/missing_link" not in url):
