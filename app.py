@@ -44,7 +44,7 @@ def createNotionTask(token, collectionURL, content, url):
             row.url = url
             http = urllib3.PoolManager()
             r = http.request('GET', url)
-            text = pypandoc.convert_text(text, 'markdown', format='html')
+            text = pypandoc.convert_text(r.data, 'markdown', format='html')
             parser = etree.XMLParser()
             tree = etree.parse(text, parser)
             doc = Document(etree.tostring(tree))
