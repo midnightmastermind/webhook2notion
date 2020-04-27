@@ -51,8 +51,9 @@ def createNotionTask(token, collectionURL, content, url):
             domain = urllib.parse.urlparse(url).netloc
             print(domain)
             for web_url in section.find_all('img'):
+                print(domain)
                 new_url = urllib.parse.urljoin(domain,web_url.get('src'))
-                print(new_url)
+                print(web_url.get('src'))
 
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
