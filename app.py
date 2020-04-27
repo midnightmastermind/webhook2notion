@@ -50,7 +50,7 @@ def createNotionTask(token, collectionURL, content, url):
             section = soup.section
             domain = urllib.parse.urlparse(url).netloc
             for web_url in section.find_all('img'):
-                print(urllib.parse.urljoin(domain,web_url.get('href')))
+                print(urllib.parse.urljoin(domain,web_url.get('src')))
                 web_url.set
 
             doc = Document(soup.prettify(formatter="html"))
