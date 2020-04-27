@@ -7,6 +7,7 @@ from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
 from md2notion.upload import convert, uploadBlock
 import urllib3
+from lxml import etree
 
 from readability.readability import Document
 
@@ -42,12 +43,11 @@ def createNotionTask(token, collectionURL, content, url):
         if (url and "http://ifttt.com/missing_link" not in url):
             row.url = url
             try:
-                http = urllib3.PoolManager()
-                r = http.request('GET', url)
-                doc = Document(r.data)
+                root = etree.fromstring(xml, base_url=url)
+                doc = Document(root)
                 text = doc.summary()
                 print(text)
-                output = pypandoc.convert_text(text, 'markdown-raw_html', format='html')
+                output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                 rendered = convert(output)
 
                 # Process the rendered array of `notion-py` block descriptors here

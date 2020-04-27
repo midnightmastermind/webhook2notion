@@ -10,3 +10,4 @@ mistletoe
 rq
 redis
 jsonify
+lxml
