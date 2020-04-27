@@ -40,7 +40,7 @@ def createNotionTask(token, collectionURL, content, url):
                 text = doc.summary()
 
                 output = pypandoc.convert_text(text, 'markdown_github-raw_html', format='html')
-                newPage = row.children.add_new(PageBlock, title=doc.title())
+                page = row.children.add_new(PageBlock, title=doc.title())
                 rendered = convert(output)
 
                 # Process the rendered array of `notion-py` block descriptors here
@@ -48,14 +48,14 @@ def createNotionTask(token, collectionURL, content, url):
 
                 # Upload all the blocks
                 for blockDescriptor in rendered:
-                    uploadBlock(blockDescriptor, newPage, doc.title())
+                    uploadBlock(blockDescriptor, page, doc.title())
             except:
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
                 page.title = content
         else:
             page = row.children.add_new(TextBlock,title=content)
-
+    return page
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
@@ -64,8 +64,8 @@ def create_note():
     token_v2 = os.environ.get("NOTES_TOKEN")
     notes_url = os.environ.get("NOTES_URL")
 
-    q.enqueue(createNotionTask(token_v2, notes_url, note, url))
-    return f'added {note} to Notion'
+    page = q.equeue(createNotionTask(token_v2, notes_url, note, url))
+    return page
 
 
 @app.route('/create_task', methods=['GET'])
@@ -74,8 +74,8 @@ def create_task():
     task = request.args.get('task')
     token_v2 = os.environ.get("TASKS_TOKEN")
     tasks_url = os.environ.get("TASKS_URL")
-    q.enqueue(createNotionTask(token_v2, tasks_url, task, url))
-    return f'added {task} to Notion'
+    page = q.enqueue(createNotionTask(token_v2, tasks_url, task, url))
+    return page
 
 if __name__ == '__main__':
     app.debug = True
