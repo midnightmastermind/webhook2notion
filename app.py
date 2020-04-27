@@ -8,6 +8,7 @@ import markdown
 from md2notion.upload import convert, uploadBlock
 import urllib3
 from lxml import etree
+from bs4 import BeautifulSoup
 
 from readability.readability import Document
 from io import StringIO, BytesIO
@@ -44,9 +45,10 @@ def createNotionTask(token, collectionURL, content, url):
             row.url = url
             http = urllib3.PoolManager()
             r = http.request('GET', url)
-            text = pypandoc.convert_text(r.data, 'markdown', format='html')
+            soup = BeautifulSoup(str(r.data), 'html.parser')
+
             parser = etree.XMLParser()
-            tree = etree.parse(text, parser)
+            tree = etree.parse(soup.get_text(), parser)
             doc = Document(etree.tostring(tree))
             text = doc.summary()
 
