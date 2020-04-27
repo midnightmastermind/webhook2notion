@@ -65,7 +65,7 @@ def createNotionTask(token, collectionURL, content, url):
 
 
             def convertImagePath(imagePath, mdFilePath):
-                return Path(mdFilePath) + Path(imagePath)
+                return Path(mdFilePath) / Path(imagePath)
             # Upload all the blocks
             for blockDescriptor in rendered:
                 uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
