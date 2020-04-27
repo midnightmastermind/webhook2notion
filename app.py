@@ -53,8 +53,9 @@ def createNotionTask(token, collectionURL, content, url):
 
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
-            text.replace('\n', '<br>')
+
             output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
+            output = output.replace('\n', '<br>')
             print(output)
             rendered = convert(output)
 
