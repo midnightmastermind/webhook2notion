@@ -33,7 +33,7 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
         row.url = url
 
-        if (url and url != "http://ifttt.com/missing_link?1587995318"):
+        if (url and "http://ifttt.com/missing_link" not in url):
             try:
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
