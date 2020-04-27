@@ -60,15 +60,10 @@ def createNotionTask(token, collectionURL, content, url):
 
                 relative_path = os.path.abspath(str(pathlib.Path().absolute())+web_url.get('src'))
 
-                if not os.path.exists(os.path.dirname(relative_path)):
-                    try:
-                        os.makedirs(os.path.dirname(filename))
-                    except OSError as exc: # Guard against race condition
-                        if exc.errno != errno.EEXIST:
-                            raise
+                os.makedirs(os.path.dirname(relative_path), exist_ok=True)
 
                 print(relative_path)
-                with open(relative_path, 'a+') as f:
+                with open(relative_path, 'w') as f:
                     f.write(img)
 
             doc = Document(soup.prettify(formatter="html"))
