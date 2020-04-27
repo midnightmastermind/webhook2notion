@@ -10,7 +10,7 @@ import urllib3
 from lxml import etree
 
 from readability.readability import Document
-
+from io import StringIO, BytesIO
 from pypandoc.pandoc_download import download_pandoc
 import pypandoc
 
@@ -44,9 +44,10 @@ def createNotionTask(token, collectionURL, content, url):
             row.url = url
             http = urllib3.PoolManager()
             r = http.request('GET', url)
-            text = pypandoc.convert_text(r.data, 'markdown', format='html')
-            root = etree.fromstring(text)
-            doc = Document(etree.tostring(root))
+            parser = etree.XMLParser(ns_clean=True)
+            tree = etree.parse(StringIO(xml), parser)
+            text = etree.tostring(tree.getroot()
+            doc = Document(text)
             text = doc.summary()
             print(text)
             output = pypandoc.convert_text(text, 'gfm-raw_html', format='xml')
