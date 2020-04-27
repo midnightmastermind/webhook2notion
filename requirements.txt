@@ -2,7 +2,7 @@ Flask==0.10.1
 git+https://github.com/kevinjalbert/notion-py.git
 html2markdown
 html2text
-md2notion==0.0.2
+md2notion
 urllib3
 gunicorn==19.9.0
 pypandoc
