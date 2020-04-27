@@ -48,7 +48,7 @@ def createNotionTask(token, collectionURL, content, url):
 
                 # Upload all the blocks
                 for blockDescriptor in rendered:
-                    q.enqueue(uploadBlock(blockDescriptor, newPage, doc.title()))
+                    uploadBlock(blockDescriptor, newPage, doc.title())
             except:
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
@@ -63,7 +63,8 @@ def create_note():
     url = request.args.get('url')
     token_v2 = os.environ.get("NOTES_TOKEN")
     notes_url = os.environ.get("NOTES_URL")
-    createNotionTask(token_v2, notes_url, note, url)
+
+    q.enqueue(createNotionTask(token_v2, notes_url, note, url))
     return f'added {note} to Notion'
 
 
@@ -73,7 +74,7 @@ def create_task():
     task = request.args.get('task')
     token_v2 = os.environ.get("TASKS_TOKEN")
     tasks_url = os.environ.get("TASKS_URL")
-    createNotionTask(token_v2, tasks_url, task, url)
+    q.enqueue(createNotionTask(token_v2, tasks_url, task, url))
     return f'added {task} to Notion'
 
 if __name__ == '__main__':
