@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 import urllib3
 from mdutils.mdutils import MdUtils
 from pypandoc.pandoc_download import download_pandoc
+import pypandoc
 # see the documentation how to customize the installation path
 # but be aware that you then need to include it in the `PATH`
 download_pandoc()
@@ -29,13 +30,10 @@ def createNotionTask(token, collectionURL, content, url):
         if (url):
             http = urllib3.PoolManager()
             r = http.request('GET', url)
-            html = markdown.markdown(r.data)
-            print(html)
-            md = "".join(BeautifulSoup(html, "xml"))
-
-            print(md)
+            output = pypandoc.convert_text(r.data, 'md', format='html')
+            print(output)
             newPage = row.children.add_new(PageBlock, title="TestMarkdown Upload")
-            upload(md, newPage)
+            upload(output, newPage)
 
             page = row.children.add_new(BookmarkBlock)
             page.link = url
