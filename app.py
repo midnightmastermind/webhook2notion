@@ -49,9 +49,9 @@ def createNotionTask(token, collectionURL, content, url):
             r = http.request('GET', url)
             soup = BeautifulSoup(str(r.data), 'html.parser')
             section = soup.section
-
+            domain = http.urlparse(url).netloc
             for web_url in section.find_all('base'):
-                http.urljoin(url,web_url.get('href'))
+                http.urljoin(domain,web_url.get('href'))
 
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
