@@ -22,7 +22,6 @@ from worker import conn
 download_pandoc()
 
 app = Flask(__name__)
-q = Queue(connection=conn)
 
 def createNotionTask(token, collectionURL, content, url):
     if (content):
@@ -60,6 +59,7 @@ def createNotionTask(token, collectionURL, content, url):
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
+    q = Queue(connection=conn)
     note = request.args.get('note')
     url = request.args.get('url')
     token_v2 = os.environ.get("NOTES_TOKEN")
@@ -71,6 +71,7 @@ def create_note():
 
 @app.route('/create_task', methods=['GET'])
 def create_task():
+    q = Queue(connection=conn)
     url = request.args.get('url')
     task = request.args.get('task')
     token_v2 = os.environ.get("TASKS_TOKEN")
