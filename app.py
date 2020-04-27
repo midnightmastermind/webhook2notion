@@ -7,11 +7,8 @@ from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
 from md2notion.upload import convert, uploadBlock
 
-from bs4 import BeautifulSoup
 import urllib3
-from mdutils.mdutils import MdUtils
 
-import requests
 from readability.readability import Document
 
 from pypandoc.pandoc_download import download_pandoc

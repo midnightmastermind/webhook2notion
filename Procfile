@@ -1,1 +1,1 @@
-web: gunicorn --preload app:app --timeout=120
+web: python3.6 app.py
