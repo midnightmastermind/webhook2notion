@@ -55,7 +55,7 @@ def createNotionTask(token, collectionURL, content, url):
             text = doc.summary()
 
             output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
-            output.encode("unicode_escape").decode("utf-8"))
+            output.encode("unicode_escape").decode("utf-8")
             rendered = convert(output)
 
 
