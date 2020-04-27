@@ -55,7 +55,8 @@ def createNotionTask(token, collectionURL, content, url):
                 page.title = content
         else:
             print("wtf")
-            page = row.children.add_new(TextBlock, title=content)
+            row.children.add_new(TextBlock, title=content)
+            print("wtf2")
 
 @app.route('/create_note', methods=['GET'])
 def create_note():
