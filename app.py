@@ -50,7 +50,7 @@ def createNotionTask(token, collectionURL, content, url):
             section = soup.section
             domain = urllib.parse.urlparse(url).netloc
             for web_url in section.find_all('base'):
-                urllib.parse.urljoin((domain,web_url.get('href'))
+                urllib.parse.urljoin(domain,web_url.get('href'))
 
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
