@@ -17,7 +17,6 @@ from readability.readability import Document
 from pypandoc.pandoc_download import download_pandoc
 import pypandoc
 
-import pdb
 # see the documentation how to customize the installation path
 # but be aware that you then need to include it in the `PATH`
 download_pandoc()

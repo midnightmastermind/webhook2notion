@@ -11,4 +11,3 @@ markdown
 mdutils
 pypandoc
 readability-lxml
-pdb
