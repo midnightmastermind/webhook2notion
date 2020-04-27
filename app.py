@@ -5,7 +5,7 @@ from flask import Flask
 from flask import request
 from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
-from md2notion.upload import upload
+from md2notion.convert import convert
 
 from bs4 import BeautifulSoup
 import urllib3
@@ -42,8 +42,7 @@ def createNotionTask(token, collectionURL, content, url):
             output = pypandoc.convert_text(text, 'md', format='html').encode('utf-8')
             newPage = row.children.add_new(PageBlock, title=doc.title())
             test = str(output)
-            pdb.set_trace()
-            upload(test, newPage)
+            convert(test, newPage)
 
             page = row.children.add_new(BookmarkBlock)
             page.link = url
