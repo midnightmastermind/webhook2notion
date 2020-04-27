@@ -46,7 +46,7 @@ def createNotionTask(token, collectionURL, content, url):
                 r = http.request('GET', url)
                 doc = Document(r.data)
                 text = doc.summary()
-
+                print(text)
                 output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                 rendered = convert(output)
 
