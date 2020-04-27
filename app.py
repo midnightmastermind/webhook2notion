@@ -7,7 +7,7 @@ from notion.block import BookmarkBlock, TextBlock, PageBlock
 import markdown
 from md2notion.upload import convert, uploadBlock
 import urllib3
-
+import urllib.parse
 from lxml import etree
 from bs4 import BeautifulSoup
 
@@ -48,9 +48,9 @@ def createNotionTask(token, collectionURL, content, url):
             r = http.request('GET', url)
             soup = BeautifulSoup(str(r.data), 'html.parser')
             section = soup.section
-            domain = urllib3.util.urlparse(url).netloc
+            domain = urllib.parse.urlparse(url).netloc
             for web_url in section.find_all('base'):
-                urllib3.util.urljoin(domain,web_url.get('href'))
+                urllib.parse.urljoin((domain,web_url.get('href'))
 
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
