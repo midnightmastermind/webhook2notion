@@ -58,6 +58,7 @@ def createNotionTask(token, collectionURL, content, url):
             text = doc.summary()
 
             output = pypandoc.convert_text(text, 'markdown_github-raw_html', format='html')
+            output = output.encode('UTF-8')
             rendered = convert(output)
 
 
