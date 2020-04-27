@@ -48,9 +48,9 @@ def createNotionTask(token, collectionURL, content, url):
             soup = BeautifulSoup(str(r.data), 'html.parser')
             section = soup.section
 
-            for web_url in section.find_all('image'):
+            for web_url in section.find_all('img'):
                 print urljoin(url,web_url.get('href'))
-                
+
             doc = Document(soup.prettify(formatter="html"))
             text = doc.summary()
 
