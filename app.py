@@ -47,7 +47,7 @@ def createNotionTask(token, collectionURL, content, url):
                 doc = Document(r.data)
                 text = doc.summary()
                 print(text)
-                output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
+                output = pypandoc.convert_text(text, 'markdown-raw_html', format='html')
                 rendered = convert(output)
 
                 # Process the rendered array of `notion-py` block descriptors here
