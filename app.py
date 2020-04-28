@@ -37,6 +37,20 @@ client_secret = 'd607afe07fef247d39078a678163f26eede5bc98'
 
 
 def createNotionTask(token, collectionURL, content, url):
+    def convertImagePath(imagePath, mdFilePath):
+        parsed_url = urllib.parse.urlparse(url)
+        domain = parsed_url.scheme + '://' + parsed_url.netloc
+        relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath)
+        new_url = urllib.parse.urljoin(domain, imagePath)
+        r = http.request('GET', new_url)
+        img = r.data
+
+        os.makedirs(os.path.dirname(relative_url), exist_ok=True)
+        with open(relative_url, 'wb') as f:
+            f.write(img)
+
+        return Path(os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
+
     if (content):
         client = NotionClient(token)
         cv = client.get_collection_view(collectionURL)
@@ -72,20 +86,6 @@ def createNotionTask(token, collectionURL, content, url):
 
                 rendered = convert(output)
 
-
-                def convertImagePath(imagePath, mdFilePath):
-                    parsed_url = urllib.parse.urlparse(url)
-                    domain = parsed_url.scheme + '://' + parsed_url.netloc
-                    relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath)
-                    new_url = urllib.parse.urljoin(domain, imagePath)
-                    r = http.request('GET', new_url)
-                    img = r.data
-
-                    os.makedirs(os.path.dirname(relative_url), exist_ok=True)
-                    with open(relative_url, 'wb') as f:
-                        f.write(img)
-
-                    return Path(os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
                 # Upload all the blocks
                 for blockDescriptor in rendered:
                     uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
@@ -100,6 +100,11 @@ def createNotionTask(token, collectionURL, content, url):
                         items = client.gallery(gallery)
                         for item in items:
                             print(item.link)
+                            rendered = convert(output)
+
+                            # Upload all the blocks
+                            for blockDescriptor in rendered:
+                                uploadBlock(blockDescriptor, row, content, imagePathFunc=convertImagePath)
                     else:
                         page = row.children.add_new(BookmarkBlock)
                         page.link = url
