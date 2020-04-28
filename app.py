@@ -76,19 +76,23 @@ def createNotionTask(token, collectionURL, content, url):
                     client = ImgurClient(client_id, client_secret)
                     items = client.get_album_images(gallery)
 
+                    imgur_object = ""
                     for item in items:
-                        print(item.link)
-                        img = "<img src='" + item.link + "' />"
-                        soup = prettierfier.prettify_html(img)
-                        rendered = convert(soup)
+                        img = "<img src='" + item.link + "' /><br>"
+                        imgur_object += imgure
 
-                        # Upload all the blocks
+                    text = prettierfier.prettify_html(imgur_obect)
+                    doc = Document(text)
+                    text = doc.summary()
+
+                    output = pypandoc.convert_text(soup, 'gfm-raw_html', format='html')
+                    if (output != ""):
+                        page = row.children.add_new(BookmarkBlock)
+                        page.link = url
+                        page.title = content
+                    else:
                         for blockDescriptor in rendered:
                             uploadBlock(blockDescriptor, row, content, imagePathFunc=convertImagePath)
-                else:
-                    page = row.children.add_new(BookmarkBlock)
-                    page.link = url
-                    page.title = content
             else:
                 try:
                     row.url = url
