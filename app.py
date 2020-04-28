@@ -81,7 +81,7 @@ def createNotionTask(token, collectionURL, content, url):
                         img = "<img src='" + item.link + "' /><br>"
                         imgur_object += img
 
-                    text = prettierfier.prettify_html(imgur_obect)
+                    text = prettierfier.prettify_html(imgur_object)
                     doc = Document(text)
                     text = doc.summary()
 
