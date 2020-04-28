@@ -9,6 +9,7 @@ from md2notion.upload import convert, uploadBlock
 import urllib3
 import urllib.parse
 from lxml import etree
+import prettierfier
 
 import pathlib
 from pathlib import Path
