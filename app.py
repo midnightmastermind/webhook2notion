@@ -97,7 +97,7 @@ def createNotionTask(token, collectionURL, content, url):
                         gallery = expanded_url.split('gallery/')[1]
 
                         client = ImgurClient(client_id, client_secret)
-                        items = client.gallery(gallery)
+                        items = client.get_abumn(gallery)
                         print(items)
                         for item in items:
                             print(item.link)
