@@ -101,7 +101,8 @@ def createNotionTask(token, collectionURL, content, url):
                         print(items)
                         for item in items:
                             print(item.link)
-                            rendered = convert(output)
+                            soup = BeautifulSoup("<img src='" + item.link + "' />"
+                            rendered = convert(soup)
 
                             # Upload all the blocks
                             for blockDescriptor in rendered:
