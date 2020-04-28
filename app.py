@@ -79,6 +79,7 @@ def createNotionTask(token, collectionURL, content, url):
                 output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                 output = output.replace('\\\\n', '')
                 output = output.replace("\\\\'", "\'")
+                print(output)
                 if (output == ""):
                     print("wtf1")
                     raise ValueError('No website data')
