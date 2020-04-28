@@ -47,7 +47,6 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
 
         if (url and "http://ifttt.com/missing_link" not in url):
-            try:
                 row.url = url
 
                 http = urllib3.PoolManager()
@@ -83,7 +82,6 @@ def createNotionTask(token, collectionURL, content, url):
                 for blockDescriptor in rendered:
                     uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
 
-            except:
                 page = row.children.add_new(BookmarkBlock)
                 page.link = url
                 page.title = content
