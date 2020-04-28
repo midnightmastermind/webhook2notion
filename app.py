@@ -68,27 +68,25 @@ def createNotionTask(token, collectionURL, content, url):
                 output = output.replace('\\\\n', '')
                 output = output.replace("\\\\'", "\'")
                 if (output == ""):
-                    break;
+                    break
+                else:
+                    rendered = convert(output)
+                    def convertImagePath(imagePath, mdFilePath):
+                        parsed_url = urllib.parse.urlparse(url)
+                        domain = parsed_url.scheme + '://' + parsed_url.netloc
+                        relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath)
+                        new_url = urllib.parse.urljoin(domain, imagePath)
+                        r = http.request('GET', new_url)
+                        img = r.data
 
-                rendered = convert(output)
+                        os.makedirs(os.path.dirname(relative_url), exist_ok=True)
+                        with open(relative_url, 'wb') as f:
+                            f.write(img)
 
-
-                def convertImagePath(imagePath, mdFilePath):
-                    parsed_url = urllib.parse.urlparse(url)
-                    domain = parsed_url.scheme + '://' + parsed_url.netloc
-                    relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath)
-                    new_url = urllib.parse.urljoin(domain, imagePath)
-                    r = http.request('GET', new_url)
-                    img = r.data
-
-                    os.makedirs(os.path.dirname(relative_url), exist_ok=True)
-                    with open(relative_url, 'wb') as f:
-                        f.write(img)
-
-                    return Path(os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
-                # Upload all the blocks
-                for blockDescriptor in rendered:
-                    uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
+                        return Path(os.path.abspath(str(pathlib.Path().absolute()) + imagePath))
+                    # Upload all the blocks
+                    for blockDescriptor in rendered:
+                        uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
             except:
                 expanded_url = urlexpander.expand(url)
                 print(expanded_url)
