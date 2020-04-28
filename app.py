@@ -40,7 +40,7 @@ def createNotionTask(token, collectionURL, content, url):
     def convertImagePath(imagePath, mdFilePath):
         parsed_url = urllib.parse.urlparse(url)
         domain = parsed_url.scheme + '://' + parsed_url.netloc
-        relative_url = os.path.abspath(str(pathlib.Path().absolute()) + imagePath)
+        relative_url = os.path.abspath(str(pathlib.Path().absolute()) + '/images/' + imagePath)
         new_url = urllib.parse.urljoin(domain, imagePath)
         r = http.request('GET', new_url)
         img = r.data
@@ -123,6 +123,8 @@ def createNotionTask(token, collectionURL, content, url):
                     page.title = content
         else:
             row.children.add_new(TextBlock, title=content)
+
+        shutil.rmtree(Path(str(pathlib.Path().absolute()) + '/images/'))
         return content
 
 @app.route('/create_note', methods=['GET'])
