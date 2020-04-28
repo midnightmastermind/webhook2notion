@@ -71,9 +71,7 @@ def createNotionTask(token, collectionURL, content, url):
 
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
-                img_url = r.json["image"]["links"]["original"]
 
-                print(img_url)
                 text = prettierfier.prettify_html(str(r.data))
                 doc = Document(text)
                 text = doc.summary()
@@ -102,7 +100,7 @@ def createNotionTask(token, collectionURL, content, url):
                         for item in items:
                             print(item.link)
                             img = "<img src='" + item.link + "' />"
-                            soup = BeautifulSoup(img)
+                            soup = prettierfier.prettify_html(img)
                             rendered = convert(soup)
 
                             # Upload all the blocks
