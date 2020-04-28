@@ -40,6 +40,10 @@ def createNotionTask(token, collectionURL, content, url):
     def convertImagePath(imagePath, mdFilePath):
         parsed_url = urllib.parse.urlparse(url)
         domain = parsed_url.scheme + '://' + parsed_url.netloc
+        print("wtf4")
+        print(parse_url)
+        print(domain)
+        print(imagePath)
         relative_url = os.path.abspath(str(pathlib.Path().absolute()) + '/images/' + imagePath)
         new_url = urllib.parse.urljoin(domain, imagePath)
         r = http.request('GET', new_url)
