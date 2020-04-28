@@ -75,7 +75,7 @@ def createNotionTask(token, collectionURL, content, url):
                 text = prettierfier.prettify_html(str(r.data))
                 doc = Document(text)
                 text = doc.summary()
-                print(text)
+
                 output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                 output = output.replace('\\\\n', '')
                 output = output.replace("\\\\'", "\'")
@@ -96,7 +96,7 @@ def createNotionTask(token, collectionURL, content, url):
 
                         client = ImgurClient(client_id, client_secret)
                         items = client.get_album_images(gallery)
-                        print(items)
+
                         for item in items:
                             print(item.link)
                             img = "<img src='" + item.link + "' />"
