@@ -93,11 +93,17 @@ def createNotionTask(token, collectionURL, content, url):
                 expanded_url = urlexpander.expand(url)
                 print(expanded_url)
                 if('imgur' in expanded_url):
-                    print("ok")
-                    # client = ImgurClient(client_id, client_secret)
-                    # items = client.gallery()
-                    # for item in items:
-                    #     print(item.link)
+                    if 'gallery/' in expanded_url:
+                        gallery = s.split(word)[1]
+
+                        client = ImgurClient(client_id, client_secret)
+                        items = client.gallery(gallery)
+                        for item in items:
+                            print(item.link)
+                    else:
+                        page = row.children.add_new(BookmarkBlock)
+                        page.link = url
+                        page.title = content
                 else:
                     page = row.children.add_new(BookmarkBlock)
                     page.link = url
