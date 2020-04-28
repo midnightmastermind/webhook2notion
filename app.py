@@ -52,7 +52,7 @@ def createNotionTask(token, collectionURL, content, url):
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
 
-                text = prettify_html(str(r.data))
+                text = prettierfier.prettify_html(str(r.data))
                 doc = Document(text)
                 text = doc.summary()
 
