@@ -11,5 +11,5 @@ rq
 redis
 jsonify
 lxml
-bs4
+prettierfier
 markdownify

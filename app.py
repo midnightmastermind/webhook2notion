@@ -9,7 +9,7 @@ from md2notion.upload import convert, uploadBlock
 import urllib3
 import urllib.parse
 from lxml import etree
-from bs4 import BeautifulSoup
+
 import pathlib
 from pathlib import Path
 from markdownify import markdownify as md
@@ -48,16 +48,17 @@ def createNotionTask(token, collectionURL, content, url):
         if (url and "http://ifttt.com/missing_link" not in url):
             try:
                 row.url = url
+
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
-                soup = BeautifulSoup(str(r.data), 'html.parser')
 
-                doc = Document(soup.prettify(formatter="html"))
+                text = prettify_html(str(r.data))
+                doc = Document(text)
                 text = doc.summary()
 
                 output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
-                output = output.replace('\\\\n', '')
-                output = output.replace("\\\\'", "\'")
+                # output = output.replace('\\\\n', '')
+                # output = output.replace("\\\\'", "\'")
                 print(output)
                 rendered = convert(output)
 
