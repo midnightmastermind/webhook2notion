@@ -67,7 +67,7 @@ def createNotionTask(token, collectionURL, content, url):
                 output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                 output = output.replace('\\\\n', '')
                 output = output.replace("\\\\'", "\'")
-                if (output !== "") {
+                if (output == "") {
                     break;
                 }
                 rendered = convert(output)
