@@ -52,15 +52,15 @@ def createNotionTask(token, collectionURL, content, url):
 
                 http = urllib3.PoolManager()
                 r = http.request('GET', url)
-
+                print(str(r.data))
                 text = prettierfier.prettify_html(str(r.data))
                 doc = Document(text)
                 text = doc.summary()
-
+                print(text)
                 output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                 output = output.replace('\\\\n', '')
                 output = output.replace("\\\\'", "\'")
-                print(output)
+
                 rendered = convert(output)
 
 
