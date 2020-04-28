@@ -94,7 +94,7 @@ def createNotionTask(token, collectionURL, content, url):
                 print(expanded_url)
                 if('imgur' in expanded_url):
                     if 'gallery/' in expanded_url:
-                        gallery = expanded_url.split(word)[1]
+                        gallery = expanded_url.split('gallery/')[1]
 
                         client = ImgurClient(client_id, client_secret)
                         items = client.gallery(gallery)
