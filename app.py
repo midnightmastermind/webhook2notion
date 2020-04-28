@@ -11,7 +11,7 @@ import urllib.parse
 from lxml import etree
 import prettierfier
 from imgurpython import ImgurClient
-
+import shutil
 import pathlib
 from pathlib import Path
 from markdownify import markdownify as md
@@ -79,7 +79,7 @@ def createNotionTask(token, collectionURL, content, url):
                     imgur_object = ""
                     for item in items:
                         img = "<img src='" + item.link + "' /><br>"
-                        imgur_object += imgure
+                        imgur_object += imgur
 
                     text = prettierfier.prettify_html(imgur_obect)
                     doc = Document(text)
