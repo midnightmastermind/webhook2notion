@@ -86,13 +86,14 @@ def createNotionTask(token, collectionURL, content, url):
                     text = prettierfier.prettify_html(imgur_object)
                     doc = Document(text)
                     text = doc.summary()
-                    print(text)
+
                     output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                     if (output != ""):
                         page = row.children.add_new(BookmarkBlock)
                         page.link = url
                         page.title = content
                     else:
+                        rendered = convert(output)
                         for blockDescriptor in rendered:
                             uploadBlock(blockDescriptor, row, content, imagePathFunc=convertImagePath)
             else:
