@@ -13,3 +13,5 @@ jsonify
 lxml
 prettierfier
 markdownify
+imgurpython
+urlexpander

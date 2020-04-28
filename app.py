@@ -10,6 +10,7 @@ import urllib3
 import urllib.parse
 from lxml import etree
 import prettierfier
+from imgurpython import ImgurClient
 
 import pathlib
 from pathlib import Path
@@ -19,6 +20,7 @@ from readability.readability import Document
 from io import StringIO, BytesIO
 from pypandoc.pandoc_download import download_pandoc
 import pypandoc
+import urlexpander
 
 from rq import Queue
 from rq.job import Job
@@ -30,6 +32,9 @@ download_pandoc()
 
 app = Flask(__name__)
 q = Queue(connection=conn)
+client_id = '3e53eed3d26e0da'
+client_secret = 'd607afe07fef247d39078a678163f26eede5bc98'
+
 
 def createNotionTask(token, collectionURL, content, url):
     if (content):
@@ -47,6 +52,7 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
 
         if (url and "http://ifttt.com/missing_link" not in url):
+            try:
                 row.url = url
 
                 http = urllib3.PoolManager()
@@ -61,7 +67,9 @@ def createNotionTask(token, collectionURL, content, url):
                 output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                 output = output.replace('\\\\n', '')
                 output = output.replace("\\\\'", "\'")
-
+                if (output !== "") {
+                    break;
+                }
                 rendered = convert(output)
 
 
@@ -81,10 +89,18 @@ def createNotionTask(token, collectionURL, content, url):
                 # Upload all the blocks
                 for blockDescriptor in rendered:
                     uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
-
-                page = row.children.add_new(BookmarkBlock)
-                page.link = url
-                page.title = content
+            except:
+                expanded_url = urlexpander.expand(url)
+                print(expanded_url)
+                if('imgur' in expanded_url):
+                    # client = ImgurClient(client_id, client_secret)
+                    # items = client.gallery()
+                    # for item in items:
+                    #     print(item.link)
+                else:
+                    page = row.children.add_new(BookmarkBlock)
+                    page.link = url
+                    page.title = content
         else:
             row.children.add_new(TextBlock, title=content)
         return content
