@@ -85,7 +85,7 @@ def createNotionTask(token, collectionURL, content, url):
                     doc = Document(text)
                     text = doc.summary()
 
-                    output = pypandoc.convert_text(soup, 'gfm-raw_html', format='html')
+                    output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                     if (output != ""):
                         page = row.children.add_new(BookmarkBlock)
                         page.link = url
