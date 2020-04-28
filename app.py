@@ -126,7 +126,7 @@ def createNotionTask(token, collectionURL, content, url):
         else:
             row.children.add_new(TextBlock, title=content)
 
-        shutil.rmtree(Path(str(pathlib.Path().absolute()) + '/images/'), ignore_error=True)
+        # shutil.rmtree(Path(str(pathlib.Path().absolute()) + '/images/'), ignore_error=True)
         return content
 
 @app.route('/create_note', methods=['GET'])
