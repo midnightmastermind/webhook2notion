@@ -66,54 +66,54 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
 
         if (url and "http://ifttt.com/missing_link" not in url):
-            try:
-                row.url = url
+            print("wtf2")
+            expanded_url = urlexpander.expand(url)
+            print(expanded_url)
+            if('imgur' in expanded_url):
+                if 'gallery/' in expanded_url:
+                    gallery = expanded_url.split('gallery/')[1]
 
-                http = urllib3.PoolManager()
-                r = http.request('GET', url)
+                    client = ImgurClient(client_id, client_secret)
+                    items = client.get_album_images(gallery)
 
-                text = prettierfier.prettify_html(str(r.data))
-                doc = Document(text)
-                text = doc.summary()
+                    for item in items:
+                        print(item.link)
+                        img = "<img src='" + item.link + "' />"
+                        soup = prettierfier.prettify_html(img)
+                        rendered = convert(soup)
 
-                output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
-                output = output.replace('\\\\n', '')
-                output = output.replace("\\\\'", "\'")
-                print(output)
-                if (output == ""):
-                    print("wtf1")
-                    raise ValueError('No website data')
-
-                rendered = convert(output)
-
-                # Upload all the blocks
-                for blockDescriptor in rendered:
-                    uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
-            except:
-                print("wtf2")
-                expanded_url = urlexpander.expand(url)
-                print(expanded_url)
-                if('imgur' in expanded_url):
-                    if 'gallery/' in expanded_url:
-                        gallery = expanded_url.split('gallery/')[1]
-
-                        client = ImgurClient(client_id, client_secret)
-                        items = client.get_album_images(gallery)
-
-                        for item in items:
-                            print(item.link)
-                            img = "<img src='" + item.link + "' />"
-                            soup = prettierfier.prettify_html(img)
-                            rendered = convert(soup)
-
-                            # Upload all the blocks
-                            for blockDescriptor in rendered:
-                                uploadBlock(blockDescriptor, row, content, imagePathFunc=convertImagePath)
-                    else:
-                        page = row.children.add_new(BookmarkBlock)
-                        page.link = url
-                        page.title = content
+                        # Upload all the blocks
+                        for blockDescriptor in rendered:
+                            uploadBlock(blockDescriptor, row, content, imagePathFunc=convertImagePath)
                 else:
+                    page = row.children.add_new(BookmarkBlock)
+                    page.link = url
+                    page.title = content
+            else:
+                try:
+                    row.url = url
+
+                    http = urllib3.PoolManager()
+                    r = http.request('GET', url)
+
+                    text = prettierfier.prettify_html(str(r.data))
+                    doc = Document(text)
+                    text = doc.summary()
+
+                    output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
+                    output = output.replace('\\\\n', '')
+                    output = output.replace("\\\\'", "\'")
+                    print(outp)
+                    if (output == ""):
+                        print("wtf1")
+                        raise ValueError('No website data')
+
+                    rendered = convert(output)
+
+                    # Upload all the blocks
+                    for blockDescriptor in rendered:
+                        uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
+                except:
                     page = row.children.add_new(BookmarkBlock)
                     page.link = url
                     page.title = content
