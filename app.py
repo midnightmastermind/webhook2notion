@@ -70,9 +70,7 @@ def createNotionTask(token, collectionURL, content, url):
         row.title = content
 
         if (url and "http://ifttt.com/missing_link" not in url):
-            print("wtf2")
             expanded_url = urlexpander.expand(url)
-            print(expanded_url)
             if('imgur' in expanded_url):
                 if 'gallery/' in expanded_url:
                     gallery = expanded_url.split('gallery/')[1]
@@ -88,7 +86,7 @@ def createNotionTask(token, collectionURL, content, url):
                     text = prettierfier.prettify_html(imgur_object)
                     doc = Document(text)
                     text = doc.summary()
-
+                    print(text)
                     output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                     if (output != ""):
                         page = row.children.add_new(BookmarkBlock)
@@ -128,7 +126,7 @@ def createNotionTask(token, collectionURL, content, url):
         else:
             row.children.add_new(TextBlock, title=content)
 
-        shutil.rmtree(Path(str(pathlib.Path().absolute()) + '/images/'))
+        shutil.rmtree(Path(str(pathlib.Path().absolute()) + '/images/'), ignore_error=True)
         return content
 
 @app.route('/create_note', methods=['GET'])
