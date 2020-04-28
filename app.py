@@ -68,7 +68,7 @@ def createNotionTask(token, collectionURL, content, url):
                 output = output.replace('\\\\n', '')
                 output = output.replace("\\\\'", "\'")
                 if (output == ""):
-                    break
+                    raise ValueError('No website data')
 
                 rendered = convert(output)
 
