@@ -96,6 +96,8 @@ def createNotionTask(token, collectionURL, content, url):
                     else:
                         rendered = convert(output)
                         for blockDescriptor in rendered:
+                            print(blockDescriptor)
+                            print("wtf7")
                             uploadBlock(blockDescriptor, row, content, imagePathFunc=convertImagePath)
             else:
                 try:
