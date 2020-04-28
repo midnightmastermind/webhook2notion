@@ -87,15 +87,15 @@ def createNotionTask(token, collectionURL, content, url):
                     doc = Document(text)
                     text = doc.summary()
 
-                    if (output != ""):
+                    output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
+
+                    if (output == ""):
                         page = row.children.add_new(BookmarkBlock)
                         page.link = url
                         page.title = content
                     else:
-                        rendered = convert(text)
+                        rendered = convert(output)
                         for blockDescriptor in rendered:
-                            print(blockDescriptor)
-                            print("wtf7")
                             uploadBlock(blockDescriptor, row, content, imagePathFunc=convertImagePath)
             else:
                 try:
