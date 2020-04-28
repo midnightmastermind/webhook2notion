@@ -80,6 +80,7 @@ def createNotionTask(token, collectionURL, content, url):
                 output = output.replace('\\\\n', '')
                 output = output.replace("\\\\'", "\'")
                 if (output == ""):
+                    print("wtf1")
                     raise ValueError('No website data')
 
                 rendered = convert(output)
@@ -88,6 +89,7 @@ def createNotionTask(token, collectionURL, content, url):
                 for blockDescriptor in rendered:
                     uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
             except:
+                print("wtf2")
                 expanded_url = urlexpander.expand(url)
                 print(expanded_url)
                 if('imgur' in expanded_url):
