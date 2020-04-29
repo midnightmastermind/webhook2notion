@@ -96,35 +96,35 @@ def createNotionTask(token, collectionURL, content, url):
                         for blockDescriptor in rendered:
                             uploadBlock(blockDescriptor, row, content, imagePathFunc=convertImagePath)
             else:
-                try:
-                    row.url = url
-
-                    http = urllib3.PoolManager()
-                    r = http.request('GET', url)
-
-                    text = prettierfier.prettify_html(str(r.data))
-                    soup = BeautifulSoup(str(r.data))
-                    metas = soup.find_all('meta')
-                    doc = Document(text)
-                    text = doc.summary()
-                    print(metas)
-                    output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
-                    output = output.replace('\\\\n', '')
-                    output = output.replace('\\\\t', '')
-                    output = output.replace("\\\\'", "\'")
-                    print(output)
-
-
-                    if (output == ""):
-                        print("wtf1")
-                        raise ValueError('No website data')
-            
-                    rendered = convert(output)
-
-                    # Upload all the blocks
-                    for blockDescriptor in rendered:
-                        uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
-                except:
+                # try:
+                #     row.url = url
+                #
+                #     http = urllib3.PoolManager()
+                #     r = http.request('GET', url)
+                #
+                #     text = prettierfier.prettify_html(str(r.data))
+                #     soup = BeautifulSoup(str(r.data))
+                #     metas = soup.find_all('meta')
+                #     doc = Document(text)
+                #     text = doc.summary()
+                #     print(metas)
+                #     output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
+                #     output = output.replace('\\\\n', '')
+                #     output = output.replace('\\\\t', '')
+                #     output = output.replace("\\\\'", "\'")
+                #     print(output)
+                #
+                #
+                #     if (output == ""):
+                #         print("wtf1")
+                #         raise ValueError('No website data')
+                #
+                #     rendered = convert(output)
+                #
+                #     # Upload all the blocks
+                #     for blockDescriptor in rendered:
+                #         uploadBlock(blockDescriptor, row, doc.title(),imagePathFunc=convertImagePath)
+                # except:
                     page = row.children.add_new(BookmarkBlock)
                     page.link = url
                     page.title = content
