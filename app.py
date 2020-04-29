@@ -118,9 +118,7 @@ def createNotionTask(token, collectionURL, content, url):
                     if (output == ""):
                         print("wtf1")
                         raise ValueError('No website data')
-                    soup = BeautifulSoup(str(r.data))
-                    metas = soup.find_all('meta')
-                    print(metas)
+            
                     rendered = convert(output)
 
                     # Upload all the blocks
