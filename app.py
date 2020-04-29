@@ -15,6 +15,7 @@ import shutil
 import pathlib
 from pathlib import Path
 from markdownify import markdownify as md
+from bs4 import BeautifulSoup
 
 from readability.readability import Document
 from io import StringIO, BytesIO
@@ -40,10 +41,7 @@ def createNotionTask(token, collectionURL, content, url):
     def convertImagePath(imagePath, mdFilePath):
         parsed_url = urllib.parse.urlparse(url)
         domain = parsed_url.scheme + '://' + parsed_url.netloc
-        print("wtf4")
-        print(parse_url)
-        print(domain)
-        print(imagePath)
+
         relative_url = os.path.abspath(str(pathlib.Path().absolute()) + '/images/' + imagePath)
         new_url = urllib.parse.urljoin(domain, imagePath)
         r = http.request('GET', new_url)
@@ -110,12 +108,15 @@ def createNotionTask(token, collectionURL, content, url):
 
                     output = pypandoc.convert_text(text, 'gfm-raw_html', format='html')
                     output = output.replace('\\\\n', '')
+                    output = output.replace('\\\\t', '')
                     output = output.replace("\\\\'", "\'")
                     print(output)
                     if (output == ""):
                         print("wtf1")
                         raise ValueError('No website data')
-
+                    soup = BeautifulSoup(str(r.data))
+                    metas = soup.find_all('meta')
+                    print(metas)
                     rendered = convert(output)
 
                     # Upload all the blocks
