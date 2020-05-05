@@ -179,8 +179,8 @@ def watch_blog():
     client = NotionClient(token_v2=token_v2, monitor=True, start_monitoring=True)
     cv = client.get_collection_view("https://www.notion.so/7c0cb2186c1b454cb838adf35d5d4dc2?v=29a73ce95f57452d80c88f5f03d902ce")
 
-	for block_row in cv.collection.get_rows():
-		block_row.add_callback(my_callback(block_row))
+    for block_row in cv.collection.get_rows():
+        block_row.add_callback(my_callback(block_row))
 
 @app.route("/results/<job_key>", methods=['GET'])
 def get_results(job_key):
