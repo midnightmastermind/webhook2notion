@@ -17,5 +17,3 @@ def watch_blog():
 		block_row.add_callback(my_callback(block_row))
 
 watch_blog()
-print("ready and watching")
-input()
