@@ -36,6 +36,8 @@ q = Queue(connection=conn)
 client_id = '3e53eed3d26e0da'
 client_secret = 'd607afe07fef247d39078a678163f26eede5bc98'
 
+def postBlog(record):
+    return record.title
 
 def createNotionTask(token, collectionURL, content, url):
     def convertImagePath(imagePath, mdFilePath):
@@ -162,6 +164,29 @@ def create_task():
     except:
         return f'added {task} to Queue'
 
+def postBlog(record):
+    return record.title
+
+@app.route('/watch_blog', methods=['GET'])
+def watch_blog():
+    token_v2 = "ab276d01115dd3f4ab499eb5ac4055057ddf28380755c8b77d83924cb2965f7928f1127c0e8bbc390e4f4b9b48535e897c428d9569538efb89ae22a615883a45746c819509bc6a285c48a4ddcc42"
+
+    client = NotionClient(token_v2=token_v2, monitor=True, start_monitoring=True)
+    cv = client.get_collection_view(
+		"https://www.notion.so/7c0cb2186c1b454cb838adf35d5d4dc2?v=29a73ce95f57452d80c88f5f03d902ce"
+	)
+    
+	def my_callback(record):
+        try:
+            job = q.enqueue_call(func=postBlog, args=(record), result_ttl=5000)
+            return f'added {record.title} to Queue'
+            print(job.get_id())
+        except:
+            return 'failed'
+
+
+	for block_row in cv.collection.get_rows() :
+		block_row.add_callback(my_callback(block_row))
 
 @app.route("/results/<job_key>", methods=['GET'])
 def get_results(job_key):
